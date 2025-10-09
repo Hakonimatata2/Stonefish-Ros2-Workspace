@@ -13,18 +13,17 @@
         </ocean>
     </environment>
 
-
     <!-- Include robot -->
-    <!-- <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot.scn">
+    <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot.scn">
         <arg name="robot_name" value="BlueROV2_ResiFarm"/>
         <arg name="position" value="0.0 0.0 10.0"/>
         <arg name="orientation" value="0.0 0.0 0.0"/>
-    </include> -->
+    </include>
 
     <!-- Include animated robot -->
-    <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot_animated.scn">
+    <!-- <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot_animated.scn">
         <arg name="robot_name" value="BlueROV2_ResiFarm"/>
-    </include>
+    </include> -->
 
 
     <!-- Seabed -->

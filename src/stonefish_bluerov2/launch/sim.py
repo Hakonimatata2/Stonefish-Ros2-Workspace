@@ -23,7 +23,7 @@ def generate_launch_description():
                 'simulation_rate' : '300.0',
                 'window_res_x' : '1200',
                 'window_res_y' : '800',
-                'rendering_quality' : 'medium'
+                'rendering_quality' : 'high'
             }.items()
         )
     ])
