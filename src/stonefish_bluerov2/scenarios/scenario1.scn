@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<scenario>
+
+ 
+    <!-- Lag et tom hav-->
+     <environment>
+        <ned latitude="40.0" longitude="3.0"/> 
+        <!-- ocean definitions -->
+         <ocean>
+            <water density="1031.0" jerlov="0.2" temperature="15.0"/>
+            <waves height="0.0"/>
+            <particles enabled="true"/>
+        </ocean>
+    </environment>
+
+
+    <!-- Include robot -->
+    <!-- <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot.scn">
+        <arg name="robot_name" value="BlueROV2_ResiFarm"/>
+        <arg name="position" value="0.0 0.0 10.0"/>
+        <arg name="orientation" value="0.0 0.0 0.0"/>
+    </include> -->
+
+    <!-- Include animated robot -->
+    <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot_animated.scn">
+        <arg name="robot_name" value="BlueROV2_ResiFarm"/>
+    </include>
+
+
+    <!-- Seabed -->
+    <materials>
+		<material name="Rock" density="3000.0" restitution="0.6"/>
+    </materials>
+    <looks>
+        <look name="seabed" rgb="0.7 0.7 0.5" roughness="0.9" normal_map="sand_normal.png"/>
+    </looks>
+    
+    <static name="Seabed" type="terrain">
+        <height_map filename="terrain.png"/>
+        <dimensions scalex="1.0" scaley="1.0" height="5.0"/>
+        <material name="Rock"/>
+        <look name="seabed"/>
+        <world_transform xyz="0.0 0.0 15.0" rpy="0.0 0.0 0.0"/>
+    </static>
+
+
+    
+</scenario>

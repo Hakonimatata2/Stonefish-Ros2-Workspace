@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<scenario>
+
+    <!-- Looks-->
+    <looks>
+        <look name="blueRovTexture" gray="1.0" roughness="0.5" texture="BlueROV/BlueRov.png"/>
+    </looks>
+
+    <!-- Materials-->
+    <materials>
+        <material name="Dummy" density="1031.0" restitution="0.1"/>
+    </materials>
+
+
+
+    <animated name="vehicle" type="model" collisions="false">
+        <physical>
+            <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            <thickness value="0.01"/>
+        </physical>
+        <visual>
+            <!-- <mesh filename="BlueROV/ROV_with_uv.obj" scale="1"/> -->
+            <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        </visual>
+
+        <material name="Dummy"/>
+        <look name="blueRovTexture"/>
+        
+        <!-- Trajectory -->
+        <trajectory type="spline" playback="repeat">
+            <keypoint time="0.0" xyz="0.0 1.0 2.0" rpy="0.0 0.0 0.0"/>
+            <keypoint time="5.0" xyz="10.0 1.0 2.0" rpy="0.0 0.0 1.57"/>
+            <keypoint time="20.0" xyz="10.0 2.0 2.0" rpy="0.0 0.0 0.0"/>
+        </trajectory>
+
+        <!-- Sensors-->
+        <sensor name="Ground_Truth" rate="10.0" type="odometry">
+            <noise position="0.0" velocity="0.0" angle="0.0" angular_velocity="0.0"/>
+            <history samples="1"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <!-- <link name="vehicle"/> -->
+            <ros_publisher topic="/ground_truth"/>
+        </sensor>
+    
+        <sensor name="FLS" type="fls">
+            <specs beams="512" bins="500" horizontal_fov="120.0" vertical_fov="30.0"/>
+            <settings range_min="0.5" range_max="10.0" gain="1.1"/>
+            <noise multiplicative="0.01" additive="0.02"/>
+            <display colormap="hot"/>
+            <origin xyz="0.147759 0.0 -0.225529" rpy="1.57079633 0.0 1.57079633"/>
+            <!-- <link name="vehicle"/> -->
+            <ros_publisher topic="/multibeam_sonar"/>
+        </sensor>
+        
+
+    </animated>
+</scenario>

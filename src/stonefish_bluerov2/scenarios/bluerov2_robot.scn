@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<scenario>
+
+    <!-- Looks-->
+    <looks>
+        <look name="blueRovTexture" gray="1.0" roughness="0.5" texture="BlueROV/BlueRov.png"/>
+    </looks>
+
+    <!-- Materials-->
+    <materials>
+        <material name="Dummy" density="1031.0" restitution="0.1"/>
+    </materials>
+
+
+    <robot name="$(arg robot_name)" fixed="false" self_collisions="false">
+        <!-- robot definitions -->
+        <base_link name="vehicle" physics="submerged" type="compound">
+            <external_part name="vehicle" type="model" physics="submerged" buoyant="true">
+                <physical>
+                    <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                    <thickness value="0.01"/>
+                </physical>
+                <visual>
+                    <!-- <mesh filename="BlueROV/ROV_with_uv.obj" scale="1"/> -->
+                    <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                </visual>
+                <material name="Dummy"/>
+                <look name="blueRovTexture"/>
+                <compound_transform rpy="0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <!-- Overwrite properties-->
+                <mass value="14.7"/>
+                <cg xyz="-0.03 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <inertia xyz="1.0 1.0 1.0"/>
+            </external_part>
+
+        </base_link>
+        <world_transform xyz="$(arg position)" rpy="$(arg orientation)"/>
+
+
+        <!-- Sensors-->
+
+        <sensor name="Ground_Truth" rate="10.0" type="odometry">
+            <noise position="0.0" velocity="0.0" angle="0.0" angular_velocity="0.0"/>
+            <history samples="1"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <link name="vehicle"/>
+            <ros_publisher topic="/ground_truth"/>
+        </sensor>
+
+        <sensor name="FLS" type="fls">
+            <specs beams="512" bins="500" horizontal_fov="120.0" vertical_fov="30.0"/>
+            <settings range_min="0.5" range_max="10.0" gain="1.1"/>
+            <noise multiplicative="0.01" additive="0.02"/>
+            <display colormap="hot"/>
+            <origin xyz="0.147759 0.0 -0.225529" rpy="1.57079633 0.0 1.57079633"/>
+            <link name="vehicle"/>
+            <ros_publisher topic="/multibeam_sonar"/>
+        </sensor>
+
+
+        <!-- Thrusters-->
+
+        <actuator name="T1" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <origin xyz="0.113 -0.1 -0.04" rpy="0.0 0.0 0.785398"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T1"/>
+        </actuator>
+
+        <actuator name="T2" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <origin xyz="0.113 0.1 -0.04" rpy="0.0 0.0 -0.785398"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T2"/>
+        </actuator>
+
+        <actuator name="T3" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <origin xyz="-0.176 0.1 -0.04" rpy="0.0 0.0 0.785398"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T3"/>
+        </actuator>
+
+        <actuator name="T4" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <origin xyz="-0.176 -0.1 -0.04" rpy="0.0 0.0 -0.785398"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T4"/>
+        </actuator>
+
+        <actuator name="T5" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <origin xyz="0.095 0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T5"/>
+        </actuator>
+
+        <actuator name="T6" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <origin xyz="0.095 -0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T6"/>
+        </actuator>
+        
+       <actuator name="T7" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <origin xyz="-0.144 0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T7"/>
+        </actuator>
+
+        <actuator name="T8" type="push">
+            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <origin xyz="-0.144 -0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
+            <link name="vehicle"/>
+            <ros_subscriber topic="/thruster_setpoints/T8"/>
+        </actuator>
+
+        <!-- Subscribe on thrusers -->
+        <!-- <ros_subscriber thrusters="/thruster_setpoints"/> -->
+
+    </robot>
+</scenario>
