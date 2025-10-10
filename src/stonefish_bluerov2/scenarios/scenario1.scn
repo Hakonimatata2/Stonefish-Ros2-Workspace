@@ -13,27 +13,19 @@
         </ocean>
     </environment>
 
-    <!-- Include robot -->
-    <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot.scn">
-        <arg name="robot_name" value="BlueROV2_ResiFarm"/>
-        <arg name="position" value="0.0 0.0 10.0"/>
-        <arg name="orientation" value="0.0 0.0 0.0"/>
-    </include>
-
-    <!-- Include animated robot -->
-    <!-- <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot_animated.scn">
-        <arg name="robot_name" value="BlueROV2_ResiFarm"/>
-    </include> -->
-
-
-    <!-- Seabed -->
+    <!-- Materials and looks -->
     <materials>
 		<material name="Rock" density="3000.0" restitution="0.6"/>
+		<material name="Net" density="3000.0" restitution="0.8"/>
     </materials>
     <looks>
         <look name="seabed" rgb="0.7 0.7 0.5" roughness="0.9" normal_map="sand_normal.png"/>
+        <look name="rope" rgb="0.0 0.0 0.0" roughness="1.0"/>
+        <look name="netTexture" rgb="0.5 0.5 0.5" roughness="0.9" normal_map="FishNetEnv/Nett.png"/>
     </looks>
     
+
+    <!-- Seabed -->
     <static name="Seabed" type="terrain">
         <height_map filename="terrain.png"/>
         <dimensions scalex="1.0" scaley="1.0" height="5.0"/>
@@ -42,6 +34,45 @@
         <world_transform xyz="0.0 0.0 15.0" rpy="0.0 0.0 0.0"/>
     </static>
 
+    <!-- Net cage -->
+    <!-- <static name="Cage" type="model">
+        <physical>
+            <mesh filename="sphere_R=1.obj" scale="1.0" convex="true"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </physical>
+        <visual>
+            <mesh filename="FishNetEnv/Fish_net_1.obj" scale="1.0"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </visual>
+        <material name="Net"/>
+        <look name="rope"/>
+        <world_transform xyz="0.0 0.0 0.0" rpy="-1.57079632679 0.0 0.0"/>
+    </static> -->
 
+    <static name="Cage" type="model">
+        <physical>
+            <mesh filename="FishNetEnv/Fish_net_flat_1.obj" scale="1.0" convex="true"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </physical>
+        <visual>
+            <mesh filename="FishNetEnv/Fish_net_flat_1.obj" scale="1.0"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </visual>
+        <material name="Net"/>
+        <look name="netTexture"/>
+        <world_transform xyz="26.0 0.0 0.0" rpy="-1.57079632679 0.0 0.0"/>
+    </static>
+
+    <!-- Include robot -->
+    <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot.scn">
+        <arg name="robot_name" value="BlueROV2_ResiFarm"/>
+        <arg name="position" value="0.0 0.0 2.0"/>
+        <arg name="orientation" value="0.0 0.0 0.0"/>
+    </include>
+
+    <!-- Include animated robot -->
+    <!-- <include file="$(find stonefish_bluerov2)/scenarios/bluerov2_robot_animated.scn">
+        <arg name="robot_name" value="BlueROV2_ResiFarm"/>
+    </include> -->
     
 </scenario>
