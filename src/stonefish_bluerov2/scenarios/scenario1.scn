@@ -2,7 +2,7 @@
 <scenario>
 
  
-    <!-- Lag et tom hav-->
+    <!-- Ocean -->
      <environment>
         <ned latitude="40.0" longitude="3.0"/> 
         <!-- ocean definitions -->
