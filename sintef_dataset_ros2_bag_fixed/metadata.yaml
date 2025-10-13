@@ -1,0 +1,229 @@
+rosbag2_bagfile_information:
+  compression_format: ''
+  compression_mode: ''
+  custom_data: null
+  duration:
+    nanoseconds: 96215692400
+  files:
+  - duration:
+      nanoseconds: 96215692400
+    message_count: 15761
+    path: sintef_dataset_ros2_bag_fixed.db3
+    starting_time:
+      nanoseconds_since_epoch: 1724164476535457900
+  message_count: 15761
+  relative_file_paths:
+  - sintef_dataset_ros2_bag_fixed.db3
+  ros_distro: rosbags
+  starting_time:
+    nanoseconds_since_epoch: 1724164476535457900
+  storage_identifier: sqlite3
+  topics_with_message_count:
+  - message_count: 29
+    topic_metadata:
+      name: /rosout
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: rosgraph_msgs/msg/Log
+      type_description_hash: RIHS01_b5b2c2cc0b32a8673810d3d77306a22cf8667a40ddbd92214b9d73dfd483b729
+  - message_count: 4
+    topic_metadata:
+      name: /rosout
+      offered_qos_profiles: "- avoid_ros_namespace_conventions: false\n  deadline:
+        {nsec: 4294967295, sec: 2147483647}\n  depth: 0\n  durability: 1\n  history:
+        3\n  lifespan: {nsec: 4294967295, sec: 2147483647}\n  liveliness: 1\n  liveliness_lease_duration:
+        {nsec: 4294967295, sec: 2147483647}\n  reliability: 1"
+      serialization_format: cdr
+      type: rosgraph_msgs/msg/Log
+      type_description_hash: RIHS01_b5b2c2cc0b32a8673810d3d77306a22cf8667a40ddbd92214b9d73dfd483b729
+  - message_count: 3
+    topic_metadata:
+      name: /bluerov2/modes
+      offered_qos_profiles: "- avoid_ros_namespace_conventions: false\n  deadline:
+        {nsec: 4294967295, sec: 2147483647}\n  depth: 0\n  durability: 1\n  history:
+        3\n  lifespan: {nsec: 4294967295, sec: 2147483647}\n  liveliness: 1\n  liveliness_lease_duration:
+        {nsec: 4294967295, sec: 2147483647}\n  reliability: 1"
+      serialization_format: cdr
+      type: joystick/msg/ModeManager2
+      type_description_hash: RIHS01_df16742ff5e25cb28838282435655fec6d16c34dc44c2f3e20c1549679ed1a72
+  - message_count: 191
+    topic_metadata:
+      name: /bluerov2/alive
+      offered_qos_profiles: "- avoid_ros_namespace_conventions: false\n  deadline:
+        {nsec: 4294967295, sec: 2147483647}\n  depth: 0\n  durability: 1\n  history:
+        3\n  lifespan: {nsec: 4294967295, sec: 2147483647}\n  liveliness: 1\n  liveliness_lease_duration:
+        {nsec: 4294967295, sec: 2147483647}\n  reliability: 1"
+      serialization_format: cdr
+      type: std_msgs/msg/Float32
+      type_description_hash: RIHS01_7170d3d8f841f7be3172ce5f4f59f3a4d7f63b0447e8b33327601ad64d83d6e2
+  - message_count: 1878
+    topic_metadata:
+      name: /commanded_thrust
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: rospy_tutorials/msg/Floats
+      type_description_hash: RIHS01_af9f50fd77037d1bfe3875e3804e6995fc9b0a7a143c023d8d5d8f2be8048326
+  - message_count: 188
+    topic_metadata:
+      name: /bluerov2/armed
+      offered_qos_profiles: "- avoid_ros_namespace_conventions: false\n  deadline:
+        {nsec: 4294967295, sec: 2147483647}\n  depth: 0\n  durability: 1\n  history:
+        3\n  lifespan: {nsec: 4294967295, sec: 2147483647}\n  liveliness: 1\n  liveliness_lease_duration:
+        {nsec: 4294967295, sec: 2147483647}\n  reliability: 1"
+      serialization_format: cdr
+      type: std_msgs/msg/Float32
+      type_description_hash: RIHS01_7170d3d8f841f7be3172ce5f4f59f3a4d7f63b0447e8b33327601ad64d83d6e2
+  - message_count: 48
+    topic_metadata:
+      name: /sensor/usbl
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: sensors/msg/SonardyneUSBL2
+      type_description_hash: RIHS01_aa3132748f7e46828cb7dd467a171966cd45888a68e20d576825fb3292e10297
+  - message_count: 837
+    topic_metadata:
+      name: /navigation/plane_approximation
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/PlaneApproximation
+      type_description_hash: RIHS01_311f44c927734270857da8e80fb406e2998a3f218ee0ed73ba771d0209ed8294
+  - message_count: 428
+    topic_metadata:
+      name: /navigation/plane_approximation_position
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/PlaneApproximationPosition
+      type_description_hash: RIHS01_d693f31185c02aaf838af1fdd0b2bc623a8412722078c48688cd77efffd5187c
+  - message_count: 834
+    topic_metadata:
+      name: /sensor/dvl_velocity
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: sensors/msg/DVLVelocity
+      type_description_hash: RIHS01_69b53990f076044e2958404ef158151291b6d49db8c8531b6cfe7f48b896a914
+  - message_count: 427
+    topic_metadata:
+      name: /sensor/dvl_position
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: sensors/msg/DVLPosition
+      type_description_hash: RIHS01_2c7713482a618dc81b79110c8a0f3935cffefa18a82c4023ccc17f73aebe8fc1
+  - message_count: 828
+    topic_metadata:
+      name: /controller/y
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/MRACOupdate
+      type_description_hash: RIHS01_183d8cd58e9a843cba79bbccbad32d59b8f171d0c94b88578f1e20a6606b68e8
+  - message_count: 1
+    topic_metadata:
+      name: /sensor/ping360_config
+      offered_qos_profiles: "- avoid_ros_namespace_conventions: false\n  deadline:
+        {nsec: 4294967295, sec: 2147483647}\n  depth: 0\n  durability: 1\n  history:
+        3\n  lifespan: {nsec: 4294967295, sec: 2147483647}\n  liveliness: 1\n  liveliness_lease_duration:
+        {nsec: 4294967295, sec: 2147483647}\n  reliability: 1"
+      serialization_format: cdr
+      type: sensors/msg/Ping360_config_2
+      type_description_hash: RIHS01_dcfb0fbf9e1425d61445e5508eb753e3751a6ec86038affa71607ca0c46cf3ed
+  - message_count: 1846
+    topic_metadata:
+      name: /joystick
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: joystick/msg/Joystick
+      type_description_hash: RIHS01_f78d275ab9901bb144316d58ee7801d9936061d5e713a83a2b1993f44900136c
+  - message_count: 822
+    topic_metadata:
+      name: /guidance
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/GuidanceManager
+      type_description_hash: RIHS01_5fd4b1e880f6d3837a92b65017122fb7e4b0498dc8fa8c6c9dc98f78eb6e480d
+  - message_count: 821
+    topic_metadata:
+      name: /controller/x
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/MRACOupdate
+      type_description_hash: RIHS01_183d8cd58e9a843cba79bbccbad32d59b8f171d0c94b88578f1e20a6606b68e8
+  - message_count: 821
+    topic_metadata:
+      name: /controller/yaw
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/PIDState
+      type_description_hash: RIHS01_c61b4bacad3db7cc6639d6012c92cfcc2747ee4d93577e95270d9b8c06d401c2
+  - message_count: 820
+    topic_metadata:
+      name: /controller/z
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/PIDState
+      type_description_hash: RIHS01_c61b4bacad3db7cc6639d6012c92cfcc2747ee4d93577e95270d9b8c06d401c2
+  - message_count: 1498
+    topic_metadata:
+      name: /sensor/attitude
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/Attitude
+      type_description_hash: RIHS01_1a42d178d952c778375d2494c7092555015b830f0766f6d04ee78feeee3dade8
+  - message_count: 1412
+    topic_metadata:
+      name: /sensor/depth_temperature
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/DepthTemperature
+      type_description_hash: RIHS01_10d273321bf9803cca81018678bf7e1985760a29ba70b93214ae2ff503b87cfa
+  - message_count: 1
+    topic_metadata:
+      name: /joystick/init
+      offered_qos_profiles: "- avoid_ros_namespace_conventions: false\n  deadline:
+        {nsec: 4294967295, sec: 2147483647}\n  depth: 0\n  durability: 1\n  history:
+        3\n  lifespan: {nsec: 4294967295, sec: 2147483647}\n  liveliness: 1\n  liveliness_lease_duration:
+        {nsec: 4294967295, sec: 2147483647}\n  reliability: 1"
+      serialization_format: cdr
+      type: std_msgs/msg/Float32
+      type_description_hash: RIHS01_7170d3d8f841f7be3172ce5f4f59f3a4d7f63b0447e8b33327601ad64d83d6e2
+  - message_count: 1500
+    topic_metadata:
+      name: /sensor/imu
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/IMU
+      type_description_hash: RIHS01_c2cac14a88439e5eebf45a906fcb29b6fbea6ec8f04ed4be7a2fabeca50764f5
+  - message_count: 93
+    topic_metadata:
+      name: /gui/netFollowing_manager
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/NetFollowingManager
+      type_description_hash: RIHS01_15c6a1d35dc4f0ad8939fbcd8193d935bdd78d58e980e4aa253c3ca83755308f
+  - message_count: 87
+    topic_metadata:
+      name: /bluerov2/battery
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/BatteryStatus
+      type_description_hash: RIHS01_8f2aaa4192b723808c60632d176a1313034e28481531784ff77196413e9bf3ca
+  - message_count: 341
+    topic_metadata:
+      name: /sensor/ping360
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: sensors/msg/Ping360
+      type_description_hash: RIHS01_08780e72c27808a4851a888d96f876620dd31ccd1447a894ace406ad39581edf
+  - message_count: 1
+    topic_metadata:
+      name: /joystick/dvl_reset_position
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: messages/msg/BoolStamped
+      type_description_hash: RIHS01_b8a9552399d14fdce26fbe6ac89baf0f666aded4fcdaa8098ae214267c83b602
+  - message_count: 2
+    topic_metadata:
+      name: /rosout_agg
+      offered_qos_profiles: ''
+      serialization_format: cdr
+      type: rosgraph_msgs/msg/Log
+      type_description_hash: RIHS01_b5b2c2cc0b32a8673810d3d77306a22cf8667a40ddbd92214b9d73dfd483b729
+  version: 8

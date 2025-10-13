@@ -41,7 +41,7 @@
 
         <!-- Sensors-->
 
-        <!-- <sensor name="Ground_Truth" rate="10.0" type="odometry">
+        <sensor name="Ground_Truth" rate="10.0" type="odometry">
             <noise position="0.0" velocity="0.0" angle="0.0" angular_velocity="0.0"/>
             <history samples="1"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -76,7 +76,7 @@
             <origin xyz="-0.026 -0.12 -0.257" rpy="1.57079632679 0.0 0.0"/>
             <link name="vehicle"/>
             <ros_publisher topic="/ping_360"/>
-        </sensor> -->
+        </sensor>
 
         <sensor name="DVL" rate="10.0" type="dvl">
             <specs beam_angle="30.0" beam_positive_z="false"/>
@@ -89,7 +89,7 @@
             <ros_publisher topic="/dvl"/>
         </sensor>
 
-        <!-- <sensor name="CamLeft" rate="10.0" type="camera">
+        <sensor name="CamLeft" rate="10.0" type="camera">
             <specs resolution_x="720" resolution_y="540" horizontal_fov="126.0"/>
             <origin xyz="0.126 -0.055 0.156" rpy="1.57079632679 0.0 1.57079632679"/>
             <link name="vehicle"/>
@@ -101,7 +101,7 @@
             <origin xyz="0.126 0.055 0.156" rpy="1.57079632679 0.0 1.57079632679"/>
             <link name="vehicle"/>
             <ros_publisher topic="/right_camera"/>
-        </sensor> -->
+        </sensor>
 
 
         <!-- Thrusters-->
