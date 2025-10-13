@@ -61,5 +61,5 @@ python3 list_topics.py
 Eksempel på å konvertere til .csv:
 
 ```
-python3 bag2csv.py --bag sintef_dataset_ros2_bag_fixed --topic /sensor/imu --out imu.csv --time-unit s
+python3 bag2csv.py --bag sintef_dataset_ros2/data_bag --topic /sensor/imu --out imu.csv --time-unit s
 ```

@@ -3,6 +3,7 @@ install/
 log/
 
 sintef_dataset/
+sintef_dataset_ros2/
 
 .vscode/
 
