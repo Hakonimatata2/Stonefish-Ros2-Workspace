@@ -20,40 +20,167 @@
             <thickness value="0.01"/>
         </physical>
         <visual>
-            <!-- <mesh filename="BlueROV/ROV_with_uv.obj" scale="1"/> -->
-            <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
+            <mesh filename="BlueROV/ROV_with_uv.obj" scale="1"/>
+            <!-- <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/> -->
             <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
         </visual>
 
         <material name="Dummy"/>
         <look name="blueRovTexture"/>
         
-        <!-- Trajectory -->
-        <trajectory type="spline" playback="repeat">
-            <keypoint time="0.0" xyz="0.0 1.0 2.0" rpy="0.0 0.0 0.0"/>
-            <keypoint time="5.0" xyz="10.0 1.0 2.0" rpy="0.0 0.0 1.57"/>
-            <keypoint time="20.0" xyz="10.0 2.0 2.0" rpy="0.0 0.0 0.0"/>
-        </trajectory>
+
+
+
 
         <!-- Sensors-->
+        <!-- ============================================================ -->
         <sensor name="Ground_Truth" rate="10.0" type="odometry">
             <noise position="0.0" velocity="0.0" angle="0.0" angular_velocity="0.0"/>
             <history samples="1"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-            <!-- <link name="vehicle"/> -->
             <ros_publisher topic="/ground_truth"/>
         </sensor>
-    
+
+        <sensor name="IMU" rate="10.0" type="imu">
+            <range angular_velocity="10.0 10.0 5.0" linear_acceleration="10.0"/>
+            <noise angle="0.1 0.1 0.5" angular_velocity="0.05" yaw_drift="0.001" linear_acceleration="0.1"/>
+            <history samples="1"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <ros_publisher topic="/imu"/>
+        </sensor>
+
         <sensor name="FLS" type="fls">
-            <specs beams="512" bins="500" horizontal_fov="120.0" vertical_fov="30.0"/>
-            <settings range_min="0.5" range_max="10.0" gain="1.1"/>
+            <specs beams="256" bins="500" horizontal_fov="120.0" vertical_fov="20.0"/>
+            <settings range_min="0.5" range_max="30.0" gain="1.1"/>
             <noise multiplicative="0.01" additive="0.02"/>
             <display colormap="hot"/>
             <origin xyz="0.147759 0.0 -0.225529" rpy="1.57079633 0.0 1.57079633"/>
-            <!-- <link name="vehicle"/> -->
             <ros_publisher topic="/multibeam_sonar"/>
         </sensor>
-        
+
+        <sensor name="Ping" type="msis">
+            <specs step="0.25" bins="500" horizontal_beam_width="2.0" vertical_beam_width="30.0"/>
+            <settings range_min="0.5" range_max="10.0" rotation_min="-180.0" rotation_max="180.0" gain="1.5"/>
+            <noise multiplicative="0.02" additive="0.03"/>
+            <display colormap="greenblue"/>
+            <origin xyz="-0.026 -0.12 -0.257" rpy="1.57079632679 0.0 0.0"/>
+            <ros_publisher topic="/ping_360"/>
+        </sensor>
+
+        <sensor name="DVL" rate="10.0" type="dvl">
+            <specs beam_angle="30.0" beam_positive_z="false"/>
+            <range velocity="10.0 10.0 5.0" altitude_min="0.5" altitude_max="50.0"/>
+            <water_layer minimum_layer_size="10.0" boundary_near="10.0" boundary_far="30.0"/>
+            <noise velocity_percent= "0.3" velocity="0.1" altitude="0.03" water_velocity_percent="0.1" water_velocity="0.1"/>
+            <history samples="1"/>
+            <origin xyz="0.153 0.0 0.0" rpy="0.0 -1.57079632679 0.0"/>
+            <ros_publisher topic="/dvl"/>
+        </sensor>
+
+        <sensor name="CamLeft" rate="10.0" type="camera">
+            <specs resolution_x="720" resolution_y="540" horizontal_fov="126.0"/>
+            <origin xyz="0.126 -0.055 0.156" rpy="1.57079632679 0.0 1.57079632679"/>
+            <ros_publisher topic="/left_camera"/>
+        </sensor>
+
+        <sensor name="CamRight" rate="10.0" type="camera">
+            <specs resolution_x="720" resolution_y="540" horizontal_fov="126.0"/>
+            <origin xyz="0.126 0.055 0.156" rpy="1.57079632679 0.0 1.57079632679"/>
+            <ros_publisher topic="/right_camera"/>
+        </sensor>
+
+        <!-- Lights -->
+        <!-- ============================================================ -->
+        <light name="Spot1">
+            <specs radius="0.01" cone_angle="30.0" illuminance="4000.0"/>
+            <color temperature="5600.0"/>
+            <origin xyz="0.140 -0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
+        </light>
+
+        <light name="Spot2">
+            <specs radius="0.01" cone_angle="30.0" illuminance="4000.0"/>
+            <color temperature="5600.0"/>
+            <origin xyz="0.140 0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
+        </light>
+
+        <light name="Spot3">
+            <specs radius="0.01" cone_angle="30.0" illuminance="4000.0"/>
+            <color temperature="5600.0"/>
+            <origin xyz="0.145 -0.187 0.0" rpy="0.0 1.2 0.0"/>
+        </light>
+
+        <light name="Spot4">
+            <specs radius="0.01" cone_angle="30.0" illuminance="4000.0"/>
+            <color temperature="5600.0"/>
+            <origin xyz="0.145 0.187 0.0" rpy="0.0 1.2 0.0"/>
+        </light>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Trajectory -->
+        <!-- ============================================================ -->
+        <trajectory type="spline" playback="repeat">
+            <!-- <keypoint time="0.0" xyz="0.0 1.0 2.0" rpy="0.0 0.0 0.0"/>
+            <keypoint time="5.0" xyz="10.0 1.0 2.0" rpy="0.0 0.0 1.57"/>
+            <keypoint time="20.0" xyz="10.0 2.0 2.0" rpy="0.0 0.0 0.0"/> -->
+
+
+
+            <keypoint time="0.0000" xyz="0.1279 0.0100 0.1325" rpy="-0.0060 0.0420 -0.0286"/>
+            <keypoint time="2.1759" xyz="0.4614 -0.0037 0.2871" rpy="-0.0168 0.0612 -0.0493"/>
+            <keypoint time="4.3488" xyz="0.9139 0.0340 0.2476" rpy="-0.0410 0.0670 -0.0086"/>
+            <keypoint time="6.5247" xyz="1.3396 0.0565 0.2086" rpy="-0.0231 0.0522 -0.0299"/>
+            <keypoint time="8.7730" xyz="1.8079 0.0693 0.1888" rpy="-0.0273 0.0956 -0.0042"/>
+            <keypoint time="10.9460" xyz="2.2298 0.0928 0.2023" rpy="-0.0224 0.0978 -0.0118"/>
+            <keypoint time="13.1091" xyz="2.6756 0.0899 0.2011" rpy="-0.0043 0.1187 -0.0045"/>
+            <keypoint time="15.2747" xyz="3.1094 0.1126 0.1549" rpy="-0.0221 0.1449 0.0025"/>
+            <keypoint time="17.4491" xyz="3.5250 0.1265 0.1178" rpy="-0.0118 0.1462 -0.0159"/>
+            <keypoint time="19.6693" xyz="3.9653 0.1288 0.0861" rpy="-0.0125 0.1450 -0.0004"/>
+            <keypoint time="21.8295" xyz="4.3915 0.1403 0.0172" rpy="-0.0122 0.1922 -0.0151"/>
+            <keypoint time="24.0067" xyz="4.8095 0.1626 -0.0860" rpy="-0.0122 0.2222 0.0130"/>
+            <keypoint time="26.1644" xyz="5.2261 0.1676 -0.1908" rpy="-0.0205 0.2656 -0.0219"/>
+            <keypoint time="28.3743" xyz="5.6403 0.1767 -0.2747" rpy="-0.0263 0.2619 -0.0242"/>
+            <keypoint time="30.5618" xyz="6.0738 0.1839 -0.3259" rpy="-0.0057 0.2350 -0.0213"/>
+            <keypoint time="32.7266" xyz="6.5084 0.1897 -0.4139" rpy="-0.0114 0.2767 -0.0128"/>
+            <keypoint time="34.8965" xyz="6.8998 0.2061 -0.5739" rpy="-0.0199 0.3361 0.0134"/>
+            <keypoint time="37.0608" xyz="7.2820 0.1951 -0.7766" rpy="-0.0184 0.3648 -0.0305"/>
+            <keypoint time="39.2625" xyz="7.6193 0.1728 -1.1310" rpy="0.0078 0.3895 0.0165"/>
+            <keypoint time="41.4288" xyz="7.9043 0.1852 -1.5330" rpy="-0.0350 0.3948 -0.0259"/>
+            <keypoint time="43.6140" xyz="8.2828 0.1858 -1.7644" rpy="-0.0260 0.3993 -0.0411"/>
+            <keypoint time="45.7864" xyz="8.6868 0.1811 -1.9283" rpy="-0.0188 0.5146 -0.0343"/>
+            <keypoint time="47.9849" xyz="9.0765 0.2066 -2.1209" rpy="-0.0277 0.5406 -0.0079"/>
+            <keypoint time="50.1902" xyz="9.4658 0.2088 -2.3386" rpy="-0.0263 0.5541 -0.0621"/>
+            <keypoint time="52.3674" xyz="9.8357 0.2151 -2.5542" rpy="-0.0200 0.5608 -0.0221"/>
+            <keypoint time="54.5505" xyz="10.2084 0.2391 -2.7731" rpy="-0.0157 0.5547 -0.0304"/>
+            <keypoint time="56.7204" xyz="10.5660 0.2254 -3.0362" rpy="-0.0309 0.6351 -0.0505"/>
+            <keypoint time="58.9669" xyz="10.9070 0.2459 -3.3503" rpy="-0.0352 0.7519 -0.0236"/>
+            <keypoint time="61.1344" xyz="11.2289 0.2563 -3.6251" rpy="-0.0513 0.7406 -0.0712"/>
+            <keypoint time="63.3097" xyz="11.5689 0.2350 -3.8760" rpy="-0.0239 0.7235 -0.0491"/>
+            <keypoint time="65.4710" xyz="11.9183 0.2563 -4.1271" rpy="-0.0220 0.7021 -0.0232"/>
+            <keypoint time="67.6678" xyz="12.2671 0.2670 -4.3953" rpy="-0.0275 0.7024 -0.0696"/>
+            <keypoint time="69.8767" xyz="12.5764 0.2591 -4.7274" rpy="-0.0160 0.8249 -0.0241"/>
+            <keypoint time="72.0557" xyz="12.8282 0.2585 -5.0813" rpy="-0.0490 0.8625 -0.0617"/>
+            <keypoint time="74.2346" xyz="13.1072 0.2519 -5.4259" rpy="-0.0476 0.8735 -0.0679"/>
+            <keypoint time="76.3999" xyz="13.4059 0.2464 -5.7449" rpy="-0.0416 0.8689 -0.0611"/>
+            <keypoint time="78.6286" xyz="13.7079 0.2516 -6.0516" rpy="-0.0606 0.8695 -0.0790"/>
+            <keypoint time="80.7838" xyz="13.9648 0.2515 -6.3956" rpy="-0.0442 0.9692 -0.0690"/>
+            <keypoint time="82.9631" xyz="14.1705 0.2558 -6.7526" rpy="-0.0602 1.0342 -0.0649"/>
+            <keypoint time="85.1332" xyz="14.4051 0.2550 -7.1106" rpy="-0.0085 1.0268 -0.0595"/>
+            <keypoint time="87.3454" xyz="14.6750 0.2364 -7.4515" rpy="-0.0678 0.9495 -0.1133"/>
+            <keypoint time="89.5776" xyz="14.9726 0.2540 -7.7741" rpy="-0.0192 0.9542 -0.0543"/>
+        </trajectory>
+
 
     </animated>
 </scenario>

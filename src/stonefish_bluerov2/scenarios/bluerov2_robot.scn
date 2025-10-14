@@ -103,6 +103,36 @@
             <ros_publisher topic="/right_camera"/>
         </sensor>
 
+        <!-- Lights -->
+
+        <light name="Spot1">
+            <specs radius="0.01" cone_angle="30.0" illuminance="4000.0"/>
+            <color temperature="5600.0"/>
+            <origin xyz="0.140 -0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
+            <link name="vehicle"/>
+        </light>
+
+        <light name="Spot2">
+            <specs radius="0.01" cone_angle="30.0" illuminance="4000.0"/>
+            <color temperature="5600.0"/>
+            <origin xyz="0.140 0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
+            <link name="vehicle"/>
+        </light>
+
+        <light name="Spot3">
+            <specs radius="0.01" cone_angle="30.0" illuminance="4000.0"/>
+            <color temperature="5600.0"/>
+            <origin xyz="0.145 -0.187 0.0" rpy="0.0 1.2 0.0"/>
+            <link name="vehicle"/>
+        </light>
+
+        <light name="Spot4">
+            <specs radius="0.01" cone_angle="30.0" illuminance="4000.0"/>
+            <color temperature="5600.0"/>
+            <origin xyz="0.145 0.187 0.0" rpy="0.0 1.2 0.0"/>
+            <link name="vehicle"/>
+        </light>
+
 
         <!-- Thrusters-->
 
@@ -161,39 +191,6 @@
             <link name="vehicle"/>
             <ros_subscriber topic="/thruster_setpoints/T8"/>
         </actuator>
-
-
-
-        <!-- Lights -->
-
-        <light name="Spot1">
-            <specs radius="0.01" cone_angle="30.0" illuminance="2000.0"/>
-            <color temperature="5600.0"/>
-            <origin xyz="0.140 -0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
-            <link name="vehicle"/>
-        </light>
-
-        <light name="Spot2">
-            <specs radius="0.01" cone_angle="30.0" illuminance="2000.0"/>
-            <color temperature="5600.0"/>
-            <origin xyz="0.140 0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
-            <link name="vehicle"/>
-        </light>
-
-        <light name="Spot3">
-            <specs radius="0.01" cone_angle="30.0" illuminance="2000.0"/>
-            <color temperature="5600.0"/>
-            <origin xyz="0.145 -0.187 0.0" rpy="0.0 1.2 0.0"/>
-            <link name="vehicle"/>
-        </light>
-
-        <light name="Spot4">
-            <specs radius="0.01" cone_angle="30.0" illuminance="2000.0"/>
-            <color temperature="5600.0"/>
-            <origin xyz="0.145 0.187 0.0" rpy="0.0 1.2 0.0"/>
-            <link name="vehicle"/>
-        </light>
-
 
 
         <!-- Subscribe on thrusers -->

@@ -9,6 +9,14 @@ cd ~/stonefish_ros2_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
+
+Fjern det som er bygget:
+
+```
+cd ~/stonefish_ros2_ws
+rm -rf build install log
+```
+
 # Kjør 
 Kjør simulator node med:
 ```

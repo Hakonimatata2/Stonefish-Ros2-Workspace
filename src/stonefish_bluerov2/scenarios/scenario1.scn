@@ -16,11 +16,11 @@
     <!-- Materials and looks -->
     <materials>
 		<material name="Rock" density="3000.0" restitution="0.6"/>
-		<material name="Net" density="3000.0" restitution="0.8"/>
+		<material name="NetMaterial" density="3000.0" restitution="0.8"/>
     </materials>
     <looks>
         <look name="seabed" rgb="0.7 0.7 0.5" roughness="0.9" normal_map="sand_normal.png"/>
-        <look name="rope" rgb="0.0 0.0 0.0" roughness="1.0"/>
+        <look name="black" rgb="0.0 0.0 0.0" roughness="1.0"/>
         <look name="netTexture" rgb="0.5 0.5 0.5" roughness="0.9" normal_map="FishNetEnv/Nett.png"/>
     </looks>
     
@@ -35,21 +35,8 @@
     </static>
 
     <!-- Net cage -->
-    <!-- <static name="Cage" type="model">
-        <physical>
-            <mesh filename="sphere_R=1.obj" scale="1.0" convex="true"/>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        </physical>
-        <visual>
-            <mesh filename="FishNetEnv/Fish_net_1.obj" scale="1.0"/>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        </visual>
-        <material name="Net"/>
-        <look name="rope"/>
-        <world_transform xyz="0.0 0.0 0.0" rpy="-1.57079632679 0.0 0.0"/>
-    </static> -->
 
-    <static name="Cage" type="model">
+    <static name="Net" type="model">
         <physical>
             <mesh filename="FishNetEnv/Fish_net_flat_1.obj" scale="1.0" convex="true"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -58,8 +45,22 @@
             <mesh filename="FishNetEnv/Fish_net_optimized.obj" scale="1.0"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </visual>
-        <material name="Net"/>
+        <material name="NetMaterial"/>
         <look name="netTexture"/>
+        <world_transform xyz="26.0 0.0 0.0" rpy="-1.57079632679 0.0 0.0"/>
+    </static>
+
+    <static name="Top" type="model">
+        <physical>
+            <mesh filename="FishNetEnv/Net_cage_top_r25m.obj" scale="1.0" convex="true"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </physical>
+        <visual>
+            <mesh filename="FishNetEnv/Net_cage_top_r25m.obj" scale="1.0"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </visual>
+        <material name="NetMaterial"/>
+        <look name="black"/>
         <world_transform xyz="26.0 0.0 0.0" rpy="-1.57079632679 0.0 0.0"/>
     </static>
 
