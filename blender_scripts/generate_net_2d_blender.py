@@ -4,11 +4,11 @@ import math
 # =========================================
 # PARAMETERS
 # =========================================
-RADIUS_M            = 10.0   # cylinder radius (m)
+RADIUS_M            = 25.0   # cylinder radius (m)
 HEIGHT_M            = 10.0   # cylinder height (m), downward along -Z
 
-OPENING_CC_M        = 0.25   # center-to-center spacing
-THREAD_THICKNESS_M  = 0.04   # strand/band width on the surface
+OPENING_CC_M        = 0.0275   # center-to-center spacing
+THREAD_THICKNESS_M  = 0.005   # strand/band width on the surface
 
 # Geometry / quality controls (affect polycount)
 ANGULAR_RES_AROUND  = 64     # angle resolution for horizontal bands

@@ -21,7 +21,7 @@
     <looks>
         <look name="seabed" rgb="0.7 0.7 0.5" roughness="0.9" normal_map="sand_normal.png"/>
         <look name="black" rgb="0.0 0.0 0.0" roughness="1.0"/>
-        <look name="netTexture" rgb="0.5 0.5 0.5" roughness="0.9" normal_map="FishNetEnv/Nett.png"/>
+        <look name="netTexture" rgb="0.1 0.1 0.1" roughness="0.5" normal_map="FishNetEnv/single_rope_normal_map.png"/>
     </looks>
     
 
@@ -42,7 +42,7 @@
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </physical>
         <visual>
-            <mesh filename="FishNetEnv/Fish_net_optimized.obj" scale="1.0"/>
+            <mesh filename="FishNetEnv/Fish_net_optimized_uv.obj" scale="1.0"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </visual>
         <material name="NetMaterial"/>

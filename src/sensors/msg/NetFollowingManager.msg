@@ -1,0 +1,6 @@
+Header header
+float32 d_depth
+float32 d_net_distance
+float32 d_net_velocity_horizontal
+float32 d_net_velocity_vertical
+float32 offset_net_heading

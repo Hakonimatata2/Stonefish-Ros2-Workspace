@@ -1,0 +1,11 @@
+Header header
+int32 ping_counter
+int32 ping_number
+int16 transmit_duration
+int16 ping_interval
+int16 scan_start
+int32 scan_length
+int8 gain_setting
+int8 confidence
+int32 distance
+int8[] profile_data

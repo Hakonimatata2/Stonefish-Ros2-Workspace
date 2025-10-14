@@ -10,7 +10,7 @@ colcon build --symlink-install
 source install/setup.bash
 ```
 
-Fjern det som er bygget:
+Dersom man ønsker å fjerne det som er bygget:
 
 ```
 cd ~/stonefish_ros2_ws
@@ -22,11 +22,12 @@ Kjør simulator node med:
 ```
 ros2 launch stonefish_bluerov2 sim.py
 ```
-Keyboard kontroll kjøres med noden:
 
+Keyboard kontroll kjøres med noden:
 ```
 ros2 run uuv_teleop keyboard_control
 ```
+
 # Les DVL data
 ```
 ros2 launch listener dvl_logger.launch.py
@@ -60,13 +61,20 @@ rosbags-convert \
   --dst-typestore ros2_humble
 ```
 
+Source ROS2 og spill av
+```
+source /opt/ros/humble/setup.bash
+ros2 bag play sintef_dataset_ros2/video_bag --clock
+```
+
+
 List alle topics ved å kjøre:
 
 ```
 python3 list_topics.py
 ```
 
-Eksempel på å konvertere til .csv:
+Script for å konvertere til .csv. Eksempel på bruk:
 
 ```
 python3 bag2csv.py --bag sintef_dataset_ros2/data_bag --topic /sensor/imu --out imu.csv --time-unit s

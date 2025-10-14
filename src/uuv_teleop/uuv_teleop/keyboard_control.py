@@ -8,10 +8,14 @@ from std_msgs.msg import Float64
 
 # Config
 TOPICS = [
-    "/thruster_setpoints/T1", "/thruster_setpoints/T2",
-    "/thruster_setpoints/T3", "/thruster_setpoints/T4",
-    "/thruster_setpoints/T5", "/thruster_setpoints/T6",
-    "/thruster_setpoints/T7", "/thruster_setpoints/T8",
+    "/thruster_setpoints/T1", 
+    "/thruster_setpoints/T2",
+    "/thruster_setpoints/T3", 
+    "/thruster_setpoints/T4",
+    "/thruster_setpoints/T5", 
+    "/thruster_setpoints/T6",
+    "/thruster_setpoints/T7", 
+    "/thruster_setpoints/T8",
 ]
 U_LIMIT = 10.0  # N limit
 RATE_HZ = 30.0  # publish frequency
