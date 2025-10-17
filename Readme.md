@@ -20,7 +20,7 @@ rm -rf build install log
 # Kjør 
 Kjør simulator node med:
 ```
-ros2 launch stonefish_bluerov2 sim.py
+ros2 launch simulator sim.py
 ```
 
 Keyboard kontroll kjøres med noden:
@@ -79,3 +79,10 @@ Script for å konvertere til .csv. Eksempel på bruk:
 ```
 python3 bag2csv.py --bag sintef_dataset_ros2/data_bag --topic /sensor/imu --out imu.csv --time-unit s
 ```
+
+
+# Recorde data
+
+Til Erik:
+
+ros2 bag record /imu /ground_truth /center_camera/camera_info /center_camera/image_color

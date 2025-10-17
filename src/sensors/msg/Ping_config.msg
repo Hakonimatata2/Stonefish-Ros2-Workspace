@@ -1,9 +1,0 @@
-Header header
-int16 ping_counter
-int16 transmit_duration
-int16 ping_interval
-int16 scan_start
-int16 scan_length
-int16 gain_setting
-int16 mode
-int16 speed_of_sound
