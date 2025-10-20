@@ -98,8 +98,8 @@
         </sensor>
 
         <sensor name="Pressure" rate="1.0" type="pressure">
-            <range pressure="10000.0"/>
-            <noise pressure="0.1"/>
+            <range pressure="3000000.0"/>
+            <noise pressure="6700"/>
             <history samples="1"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <link name="vehicle"/>

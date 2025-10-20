@@ -74,10 +74,24 @@ List alle topics ved å kjøre:
 python3 list_topics.py
 ```
 
+# Bag to .csv
+
 Script for å konvertere til .csv. Eksempel på bruk:
 
 ```
 python3 bag2csv.py --bag sintef_dataset_ros2/data_bag --topic /sensor/imu --out imu.csv --time-unit s
+```
+
+Eksempel med custom meldingstype:
+
+```
+python3 bag2csv.py \
+  --bag recorded_data/simulation/rosbag2_2025_10_20-07_48_42/ \
+  --topic /dvl \
+  --out dvl_sim.csv \
+  --time-unit s \
+  --msg-dir /root/stonefish_ros2_ws/src/stonefish_ros2/msg \
+  --dep-pkg std_msgs --dep-pkg sensor_msgs --dep-pkg geometry_msgs --dep-pkg builtin_interfaces
 ```
 
 
