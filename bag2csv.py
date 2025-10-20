@@ -6,6 +6,9 @@ from dataclasses import is_dataclass, asdict
 from rosbags.highlevel import AnyReader
 from rosbags.typesys import get_types_from_msg, get_types_from_idl
 
+from rosbags.typesys.store import Typestore
+
+
 # ----------------------------- Utilities ---------------------------------- #
 
 def flatten(obj, prefix='', out=None, max_list=16):
@@ -37,30 +40,19 @@ def flatten(obj, prefix='', out=None, max_list=16):
             out[prefix] = obj
         return out
 
-    # ukjente typer droppes stille
-    return out
+    return out  # ukjente typer droppes stille
+
 
 # ------------------------ Type registration -------------------------------- #
 
 def infer_pkg_name_from_msg_dir(msg_dir: Path) -> str | None:
-    """
-    Støtter både .../src/<pakke>/msg og .../share/<pakke>/msg
-    """
-    try:
-        if msg_dir.name != 'msg':
-            return None
-        parent = msg_dir.parent
-        if parent and parent.name:
-            # .../<pakke>/msg
-            return parent.name
-    except Exception:
-        pass
-    return None
+    if msg_dir.name != 'msg':
+        return None
+    parent = msg_dir.parent
+    return parent.name if parent and parent.name else None
 
-def register_all_types_in_dir(reader: AnyReader, msg_dir: Path, pkg_name: str | None = None) -> int:
-    """
-    Leser alle .msg og .idl i msg_dir og registrerer dem i typestore.
-    """
+
+def register_all_types_in_dir_into(typestore: Typestore, msg_dir: Path, pkg_name: str | None = None) -> int:
     if not msg_dir.exists() or not msg_dir.is_dir():
         print(f"[type-reg] Advarsel: msg-dir finnes ikke: {msg_dir}", file=sys.stderr)
         return 0
@@ -68,26 +60,25 @@ def register_all_types_in_dir(reader: AnyReader, msg_dir: Path, pkg_name: str | 
     if not pkg_name:
         pkg_name = infer_pkg_name_from_msg_dir(msg_dir)
     if not pkg_name:
-        print(f"[type-reg] Klarte ikke å utlede pakkenavn fra {msg_dir}. "
-              f"Oppgi gjerne --pkg-name.", file=sys.stderr)
+        print(f"[type-reg] Klarte ikke å utlede pakkenavn fra {msg_dir}. Oppgi --pkg-name ved behov.",
+              file=sys.stderr)
 
     msg_files = sorted(msg_dir.glob("*.msg"))
     idl_files = sorted(msg_dir.glob("*.idl"))
 
     if not msg_files and not idl_files:
-        print(f"[type-reg] Fant ingen .msg eller .idl i {msg_dir}", file=sys.stderr)
+        print(f"[type-reg] Fant ingen .msg/.idl i {msg_dir}", file=sys.stderr)
         return 0
 
     types_all = {}
     registered = 0
 
-    # .msg
     for p in msg_files:
         typename = f"{pkg_name}/msg/{p.stem}" if pkg_name else None
         try:
             text = p.read_text()
             if not typename:
-                print(f"[type-reg] Hopper over (mangler pakkenavn): {p.name}", file=sys.stderr)
+                print(f"[type-reg] Hopper .msg (mangler pakkenavn): {p.name}", file=sys.stderr)
                 continue
             tdict = get_types_from_msg(text, typename)
             types_all.update(tdict)
@@ -95,7 +86,6 @@ def register_all_types_in_dir(reader: AnyReader, msg_dir: Path, pkg_name: str | 
         except Exception as e:
             print(f"[type-reg] Feil ved parsing av {p.name}: {e}", file=sys.stderr)
 
-    # .idl
     for p in idl_files:
         typename = f"{pkg_name}/msg/{p.stem}" if pkg_name else None
         try:
@@ -107,19 +97,15 @@ def register_all_types_in_dir(reader: AnyReader, msg_dir: Path, pkg_name: str | 
             print(f"[type-reg] Feil ved parsing av {p.name}: {e}", file=sys.stderr)
 
     if types_all:
-        reader.typestore.register(types_all)
-        print(f"[type-reg] Registrerte {registered} typer fra {msg_dir} "
-              f"(totalt {len(types_all)} entries).")
+        typestore.register(types_all)
+        print(f"[type-reg] Registrerte {registered} topp-typer fra {msg_dir} (sum {len(types_all)} typedefs).")
     else:
-        print("[type-reg] Ingen typer ble registrert.", file=sys.stderr)
+        print("[type-reg] Ingen typedefs ble registrert.", file=sys.stderr)
 
     return registered
 
-def register_dep_packages(reader: AnyReader, dep_pkgs: list[str]) -> int:
-    """
-    Registrer alle .msg/.idl for oppgitte avhengighetspakker via ament_index.
-    Eks: std_msgs, sensor_msgs, geometry_msgs, builtin_interfaces
-    """
+
+def register_dep_packages_into(typestore: Typestore, dep_pkgs: list[str]) -> int:
     if not dep_pkgs:
         return 0
     try:
@@ -133,10 +119,21 @@ def register_dep_packages(reader: AnyReader, dep_pkgs: list[str]) -> int:
         try:
             share = Path(get_package_share_directory(pkg))
             msg_dir = share / 'msg'
-            total += register_all_types_in_dir(reader, msg_dir, pkg)
+            total += register_all_types_in_dir_into(typestore, msg_dir, pkg)
         except Exception as e:
             print(f"[type-reg] Fant ikke share-dir for {pkg}: {e}", file=sys.stderr)
     return total
+
+
+def build_typestore(msg_dirs: list[Path], pkg_names: list[str], dep_pkgs: list[str]) -> Typestore:
+    ts = Typestore()
+    if dep_pkgs:
+        register_dep_packages_into(ts, dep_pkgs)
+    for i, d in enumerate(msg_dirs or []):
+        pkg = pkg_names[i] if (i < len(pkg_names) and pkg_names[i]) else None
+        register_all_types_in_dir_into(ts, d, pkg)
+    return ts
+
 
 # ------------------------------ Main --------------------------------------- #
 
@@ -148,13 +145,12 @@ def main():
     ap.add_argument('--time-unit', choices=['ns', 's'], default='ns', help='Tidsstempel i ns eller sekunder')
     ap.add_argument('--max', type=int, default=0, help='Maks antall meldinger (0=alle)')
 
-    # Nytt: flere msg-dir + dep-pakker
     ap.add_argument('--msg-dir', type=Path, action='append', default=[],
                     help='Mappe med .msg/.idl (kan oppgis flere ganger). Eks: .../src/<pkg>/msg')
     ap.add_argument('--pkg-name', type=str, action='append', default=[],
                     help='Pakkenavn for hver --msg-dir i samme rekkefølge (valgfritt).')
     ap.add_argument('--dep-pkg', dest='dep_pkgs', action='append', default=[],
-                    help='Avhengighetspakke som skal registreres via ament_index (kan gjentas).')
+                    help='Avhengighetspakke registrert via ament_index (kan gjentas).')
 
     args = ap.parse_args()
 
@@ -162,20 +158,11 @@ def main():
     if not bagpath.exists():
         raise SystemExit(f"Fant ikke bag: {bagpath}")
 
-    with AnyReader([bagpath]) as reader:
-        # Registrer avhengigheter først (std_msgs osv.)
-        if args.dep_pkgs:
-            register_dep_packages(reader, args.dep_pkgs)
+    # Bygg typestore FØR AnyReader
+    typestore = build_typestore(args.msg_dir, args.pkg_name, args.dep_pkgs)
 
-        # Registrer egne/andre msg-mapper
-        if args.msg_dir:
-            for i, d in enumerate(args.msg_dir):
-                pkg = None
-                if i < len(args.pkg_name):
-                    pkg = args.pkg_name[i]
-                register_all_types_in_dir(reader, d, pkg)
-
-        # Filtrer connections for valgt topic
+    # Viktig: gi default_typestore til AnyReader
+    with AnyReader([bagpath], default_typestore=typestore) as reader:
         conns = [c for c in reader.connections if c.topic == args.topic]
         if not conns:
             tilgjengelig = ', '.join(sorted({c.topic for c in reader.connections}))
@@ -189,7 +176,6 @@ def main():
             msg = reader.deserialize(raw, conn.msgtype)
 
             row = {'t': ts if args.time_unit == 'ns' else ts / 1e9}
-
             data = {}
             flatten(msg, out=data)
             row.update(data)
@@ -214,6 +200,7 @@ def main():
         print(f"Skrev {len(rows)} rader til {outpath}")
         preview = ', '.join(keys[:10]) + (' ...' if len(keys) > 10 else '')
         print('Kolonner:', preview)
+
 
 if __name__ == '__main__':
     main()

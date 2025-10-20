@@ -97,9 +97,9 @@
             <ros_publisher topic="/dvl"/>
         </sensor>
 
-        <sensor name="Pressure" rate="1.0" type="pressure">
+        <sensor name="Pressure" rate="16.0" type="pressure">
             <range pressure="3000000.0"/>
-            <noise pressure="6700"/>
+            <noise pressure="0.67"/>
             <history samples="1"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <link name="vehicle"/>
