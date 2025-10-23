@@ -44,8 +44,8 @@
 
     <static name="Net" type="model">
         <physical>
-            <!-- <mesh filename="FishNetEnv/Fish_net_flat_1.obj" scale="1.0" convex="false"/> -->
-            <mesh filename="FishNetEnv/Fish_net_optimized_128_uv.obj" scale="1.0" convex="false"/>
+            <mesh filename="FishNetEnv/Fish_net_flat_1.obj" scale="1.0" convex="false"/>
+            <!-- <mesh filename="FishNetEnv/Fish_net_optimized_128_uv.obj" scale="1.0" convex="false"/> -->
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </physical>
         <visual>

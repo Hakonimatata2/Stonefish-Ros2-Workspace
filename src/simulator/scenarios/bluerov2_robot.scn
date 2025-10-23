@@ -32,9 +32,8 @@
                 
                 <!-- Overwrite properties-->
                 <mass value="14.8"/>
-                <cg xyz="-0.03 0.0 0.0" rpy="0.0 0.0 0.0"/>
-                <!-- <inertia xyz="0.424 0.437 0.417"/> -->
-                <inertia xyz="0.843 0.862 0.855"/>
+                <cg xyz="-0.031 0.0 -0.02" rpy="0.0 0.0 0.0"/>
+                <inertia xyz="0.424 0.437 0.417"/>
             </external_part>
 
         </base_link>
@@ -99,7 +98,7 @@
 
         <sensor name="Pressure" rate="16.0" type="pressure">
             <range pressure="3000000.0"/>
-            <noise pressure="0.67"/>
+            <noise pressure="10.0"/>
             <history samples="1"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <link name="vehicle"/>
@@ -163,56 +162,56 @@
         <!-- Thrusters-->
 
         <actuator name="T1" type="push">
-            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
-            <origin xyz="0.113 -0.1 -0.04" rpy="0.0 0.0 0.785398"/>
+            <specs lower_limit="-40.2" upper_limit="51.5" inverted="false"/>
+            <origin xyz="0.113 -0.1 -0.04" rpy="0.0 0.0 0.523599"/>
             <link name="vehicle"/>
             <ros_subscriber topic="/thruster_setpoints/T1"/>
         </actuator>
 
         <actuator name="T2" type="push">
-            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
-            <origin xyz="0.113 0.1 -0.04" rpy="0.0 0.0 -0.785398"/>
+            <specs lower_limit="-40.2" upper_limit="51.5" inverted="false"/>
+            <origin xyz="0.113 0.1 -0.04" rpy="0.0 0.0 -0.523599"/>
             <link name="vehicle"/>
             <ros_subscriber topic="/thruster_setpoints/T2"/>
         </actuator>
 
         <actuator name="T3" type="push">
-            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
-            <origin xyz="-0.176 0.1 -0.04" rpy="0.0 0.0 0.785398"/>
+            <specs lower_limit="-40.2" upper_limit="51.5" inverted="true"/>
+            <origin xyz="-0.176 0.1 -0.04" rpy="0.0 0.0 0.523599"/>
             <link name="vehicle"/>
             <ros_subscriber topic="/thruster_setpoints/T3"/>
         </actuator>
 
         <actuator name="T4" type="push">
-            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
-            <origin xyz="-0.176 -0.1 -0.04" rpy="0.0 0.0 -0.785398"/>
+            <specs lower_limit="-40.2" upper_limit="51.5" inverted="true"/>
+            <origin xyz="-0.176 -0.1 -0.04" rpy="0.0 0.0 -0.523599"/>
             <link name="vehicle"/>
             <ros_subscriber topic="/thruster_setpoints/T4"/>
         </actuator>
 
         <actuator name="T5" type="push">
-            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <specs lower_limit="-40.2" upper_limit="51.5" inverted="false"/>
             <origin xyz="0.095 0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
             <link name="vehicle"/>
             <ros_subscriber topic="/thruster_setpoints/T5"/>
         </actuator>
 
         <actuator name="T6" type="push">
-            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <specs lower_limit="-40.2" upper_limit="51.5" inverted="true"/>
             <origin xyz="0.095 -0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
             <link name="vehicle"/>
             <ros_subscriber topic="/thruster_setpoints/T6"/>
         </actuator>
         
        <actuator name="T7" type="push">
-            <specs lower_limit="-10.0" upper_limit="10.0" inverted="true"/>
+            <specs lower_limit="-40.2" upper_limit="51.5" inverted="true"/>
             <origin xyz="-0.144 0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
             <link name="vehicle"/>
             <ros_subscriber topic="/thruster_setpoints/T7"/>
         </actuator>
 
         <actuator name="T8" type="push">
-            <specs lower_limit="-10.0" upper_limit="10.0" inverted="false"/>
+            <specs lower_limit="-40.2" upper_limit="51.5" inverted="false"/>
             <origin xyz="-0.144 -0.22 -0.113" rpy="0.0 -1.57079633 0.0"/>
             <link name="vehicle"/>
             <ros_subscriber topic="/thruster_setpoints/T8"/>

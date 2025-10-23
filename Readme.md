@@ -86,17 +86,22 @@ Eksempel med custom meldingstype:
 
 ```
 python3 bag2csv.py \
-  --bag recorded_data/simulation/rosbag2_2025_10_20-07_48_42/ \
-  --topic /dvl \
-  --out dvl_sim.csv \
   --time-unit s \
   --msg-dir /root/stonefish_ros2_ws/src/stonefish_ros2/msg \
-  --dep-pkg std_msgs --dep-pkg sensor_msgs --dep-pkg geometry_msgs --dep-pkg builtin_interfaces
+  --dep-pkg std_msgs --dep-pkg sensor_msgs --dep-pkg geometry_msgs --dep-pkg builtin_interfaces \
+  --dep-pkg nav_msgs \
+  --bag path/to/bag \
+  --topic /topic \
+  --out output.csv
 ```
 
 
 # Recorde data
 
 Til Erik:
+ros2 bag record /dvl /pressure /ground_truth /center_camera/camera_info /center_camera/image_color
 
-ros2 bag record /imu /ground_truth /center_camera/camera_info /center_camera/image_color
+
+
+
+ros2 bag record /ping_360/image /multibeam_sonar/image

@@ -87,14 +87,19 @@ def register_all_types_in_dir_into(typestore: Typestore, msg_dir: Path, pkg_name
             print(f"[type-reg] Feil ved parsing av {p.name}: {e}", file=sys.stderr)
 
     for p in idl_files:
-        typename = f"{pkg_name}/msg/{p.stem}" if pkg_name else None
         try:
             text = p.read_text()
-            tdict = get_types_from_idl(text, typename)
+            try:
+                # Nyere/eldre rosbags kan ha ulik signatur; prøv 2 args først
+                tdict = get_types_from_idl(text, f"{pkg_name}/msg/{p.stem}")
+            except TypeError:
+                # Din versjon: kun 1 arg (IDL-tekst)
+                tdict = get_types_from_idl(text)
             types_all.update(tdict)
             registered += 1
         except Exception as e:
             print(f"[type-reg] Feil ved parsing av {p.name}: {e}", file=sys.stderr)
+
 
     if types_all:
         typestore.register(types_all)
