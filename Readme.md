@@ -1,8 +1,3 @@
-# Hei
-
-Trykk **Ctrl + Shift + v** for å vise en finere readme.
-
-
 # Bygg
 ```
 cd ~/stonefish_ros2_ws
@@ -68,7 +63,7 @@ ros2 bag play sintef_dataset_ros2/video_bag --clock
 ```
 
 
-List alle topics ved å kjøre:
+List alle bag topics ved å kjøre:
 
 ```
 python3 list_topics.py
@@ -104,7 +99,7 @@ ros2 bag record /dvl /pressure /ground_truth /center_camera/camera_info /center_
 
 
 
-ros2 bag record /ping_360/image /multibeam_sonar/image
+ros2 bag record /ping_360/image /multibeam_sonar/image 
 
 
-ros2 bag record /pressure /dvl
+ros2 bag record /pressure /dvl /ground_truth

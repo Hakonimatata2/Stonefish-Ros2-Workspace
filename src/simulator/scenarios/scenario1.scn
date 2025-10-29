@@ -44,8 +44,8 @@
 
     <static name="Net" type="model">
         <physical>
-            <!-- <mesh filename="FishNetEnv/Fish_net_flat_1.obj" scale="1.0" convex="false"/> -->
-            <mesh filename="FishNetEnv/Fish_net_optimized_128_uv.obj" scale="1.0" convex="false"/>
+            <mesh filename="FishNetEnv/Fish_net_flat_1.obj" scale="1.0" convex="false"/>
+            <!-- <mesh filename="FishNetEnv/Fish_net_optimized_128_uv.obj" scale="1.0" convex="false"/> -->
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </physical>
         <visual>
@@ -54,6 +54,7 @@
         </visual>
         <material name="NetMaterial"/>
         <look name="netTexture"/>
+        <!-- <look name="black"/> -->
         <world_transform xyz="0.0 0.0 0.0" rpy="-1.57079632679 0.0 0.0"/>
     </static>
 
@@ -75,7 +76,7 @@
     <!-- Include robot -->
     <!-- <include file="$(find simulator)/scenarios/bluerov2_robot.scn">
         <arg name="robot_name" value="BlueROV2_ResiFarm"/>
-        <arg name="position" value="0.0 0.0 2.0"/>
+        <arg name="position" value="24.0 0.0 2.0"/>
         <arg name="orientation" value="0.0 0.0 0.0"/>
     </include> -->
 
