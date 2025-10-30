@@ -114,25 +114,25 @@
         <!-- Lights -->
         <!-- ============================================================ -->
         <light name="Spot1">
-            <specs radius="0.001" cone_angle="120.0" illuminance="1500.0"/>
+            <specs radius="0.001" cone_angle="80.0" illuminance="1500.0"/>
             <color temperature="5700.0"/>
             <origin xyz="0.155 -0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
         </light>
 
         <light name="Spot2">
-            <specs radius="0.001" cone_angle="120.0" illuminance="1500.0"/>
+            <specs radius="0.001" cone_angle="80.0" illuminance="1500.0"/>
             <color temperature="5700.0"/>
             <origin xyz="0.155 0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
         </light>
 
         <light name="Spot3">
-            <specs radius="0.001" cone_angle="120.0" illuminance="1500.0"/>
+            <specs radius="0.001" cone_angle="80.0" illuminance="1500.0"/>
             <color temperature="5700.0"/>
             <origin xyz="0.160 -0.187 0.0" rpy="0.0 1.2 0.0"/>
         </light>
 
         <light name="Spot4">
-            <specs radius="0.001" cone_angle="120.0" illuminance="1500.0"/>
+            <specs radius="0.001" cone_angle="80.0" illuminance="1500.0"/>
             <color temperature="5700.0"/>
             <origin xyz="0.160 0.187 0.0" rpy="0.0 1.2 0.0"/>
         </light>

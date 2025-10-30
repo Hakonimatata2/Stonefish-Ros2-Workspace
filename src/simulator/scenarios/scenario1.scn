@@ -7,7 +7,7 @@
         <ned latitude="40.0" longitude="3.0"/> 
         <!-- ocean definitions -->
             <ocean>
-            <water density="1031.0" jerlov="0.35" temperature="15.0"/>
+            <water density="1031.0" jerlov="0.58" temperature="15.0"/>
             <waves height="0.0"/>
             <particles enabled="true"/>
         </ocean>
@@ -15,7 +15,7 @@
 
     <!-- Atmosphere -->
     <atmosphere>
-        <sun azimuth="180.0" elevation="70.0"/>
+        <sun azimuth="180.0" elevation="90.0"/>
     </atmosphere>
 
     <!-- Materials and looks -->
@@ -27,7 +27,8 @@
         <look name="seabed" rgb="0.7 0.7 0.5" roughness="0.9" normal_map="sand_normal.png"/>
         <look name="black" rgb="0.0 0.0 0.0" roughness="1.0"/>
         <look name="ropeTexture" gray="1.0" roughness="0.5" normal_map="FishNetEnv/single_rope_normal_map.png"/>
-        <look name="netTexture" rgb="0.2 0.2 0.2" roughness="0.5" normal_map="FishNetEnv/fibre_texture.png"/>
+        <!-- <look name="netTexture" rgb="0.4 0.3 0.2" roughness="1.0" normal_map="FishNetEnv/fibre_texture.png"/> -->
+        <look name="netTexture" rgb="0.4 0.3 0.2" roughness="1.0" normal_map="FishNetEnv/fibre_texture_inverted.png"/>
     </looks>
     
 
@@ -49,7 +50,8 @@
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </physical>
         <visual>
-            <mesh filename="FishNetEnv/Fish_net_optimized_128_uv.obj" scale="1.0"/>
+            <!-- <mesh filename="FishNetEnv/Fish_net_optimized_128_uv.obj" scale="1.0"/> -->
+            <mesh filename="FishNetEnv/Fish_net_optimized_128_uv_2.obj" scale="1.0"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </visual>
         <material name="NetMaterial"/>
@@ -71,7 +73,6 @@
         <look name="black"/>
         <world_transform xyz="0.0 0.0 0.0" rpy="-1.57079632679 0.0 0.0"/>
     </static>
-
 
     <!-- Include robot -->
     <!-- <include file="$(find simulator)/scenarios/bluerov2_robot.scn">

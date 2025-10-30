@@ -3,9 +3,6 @@ from math import sin, cos, atan2, asin, pi
 from pathlib import Path
 import numpy as np, cv2
 from rosbags.highlevel import AnyReader
-import matplotlib.pyplot as plt
-import dataclasses
-from typing import Any, Mapping, Sequence
 import pandas as pd
 from rosbags.typesys import Stores, get_typestore
 
@@ -191,8 +188,6 @@ def get_ping360_data(bag, topic="/sensor/ping360"):
 
 
 
-
-
 def get_simulated_image_data(bag, topic):
 
     data_dict = {
@@ -225,7 +220,7 @@ def get_simulated_image_data(bag, topic):
     return data_dict
 
 
-def get_color_image(bag, topic):
+def get_compressed_color_image(bag, topic):
 
     data_dict = {
         'time': [],
@@ -250,6 +245,36 @@ def get_color_image(bag, topic):
 
             data_dict['time'].append(t_rel)
             data_dict['image'].append(rgb)
+    
+    return data_dict
+
+
+def get_color_image_data(bag, topic):
+
+    data_dict = {
+        'time': [],
+        'image': []
+    }
+
+    typestore = get_typestore(Stores.ROS2_HUMBLE)
+
+    with AnyReader([Path(bag)], default_typestore=typestore) as reader:
+        conns = [c for c in reader.connections if c.topic == topic]
+        if not conns:
+            raise SystemExit(f"Could not find topic {topic}. Available: " + ", ".join(sorted({c.topic for c in reader.connections})))
+
+        start_ns = reader.start_time
+
+        for conn, t_ns, raw in reader.messages(connections=conns):
+            t_rel = (t_ns - start_ns) * 1e-9
+            msg = reader.deserialize(raw, conn.msgtype)
+
+            w, h = msg.width, msg.height
+            data = np.frombuffer(msg.data, dtype=np.uint8)
+            img = np.reshape(data, (h, w, 3))            
+
+            data_dict['time'].append(t_rel)
+            data_dict['image'].append(img)
     
     return data_dict
 

@@ -99,7 +99,7 @@ ros2 bag record /dvl /pressure /ground_truth /center_camera/camera_info /center_
 
 
 
-ros2 bag record /ping_360/image /multibeam_sonar/image 
+ros2 bag record /ping_360/image /multibeam_sonar/image /center_camera/image_color
 
 
 ros2 bag record /pressure /dvl /ground_truth
