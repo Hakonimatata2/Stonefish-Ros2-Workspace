@@ -5,6 +5,8 @@ import numpy as np, cv2
 from rosbags.highlevel import AnyReader
 import pandas as pd
 from rosbags.typesys import Stores, get_typestore
+import math
+
 
 def Rx(r):
     return np.array([[1,0,0],[0,cos(r),-sin(r)],[0,sin(r),cos(r)]], dtype=float)
@@ -30,6 +32,29 @@ def R_to_rpy_zyx(R):
         roll = atan2(R[2,1], R[2,2])
         yaw  = atan2(R[1,0], R[0,0])
     return roll, pitch, yaw
+
+
+def quaternion_to_euler(w, x, y, z):
+    """
+    Converts quanternion to rpy euler (radians)
+    """
+
+    sinr_cosp = 2 * (w * x + y * z)
+    cosr_cosp = 1 - 2 * (x * x + y * y)
+    roll = math.atan2(sinr_cosp, cosr_cosp)
+
+    sinp = 2 * (w * y - z * x)
+    if abs(sinp) >= 1:
+        pitch = math.copysign(math.pi / 2, sinp)
+    else:
+        pitch = math.asin(sinp)
+
+    siny_cosp = 2 * (w * z + x * y)
+    cosy_cosp = 1 - 2 * (y * y + z * z)
+    yaw = math.atan2(siny_cosp, cosy_cosp)
+
+    return roll, pitch, yaw
+
 
 def apply_T(T, p_xyz, rpy):
     """T: 4x4, p_xyz: (x,y,z), rpy: (r,p,y) -> (p_out, rpy_out)"""
@@ -337,3 +362,12 @@ def compare_singals(t1, t2, data1, data2):
 
 def cut_dataframe(df, t1, t2):
     return df[(df["t"] >= t1) & (df["t"] <= t2)]
+
+
+def print_bag_topics(bagdir: str):
+    bagdir = Path(bagdir)
+    with AnyReader([bagdir]) as reader:
+        print('Topics and message types:')
+        for c in sorted(reader.connections, key=lambda x: x.topic):
+            print(f'{c.topic:45s}  {c.msgtype}')
+
