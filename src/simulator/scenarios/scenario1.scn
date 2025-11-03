@@ -28,7 +28,7 @@
         <look name="black" rgb="0.0 0.0 0.0" roughness="1.0"/>
         <look name="ropeTexture" gray="1.0" roughness="0.5" normal_map="FishNetEnv/single_rope_normal_map.png"/>
         <!-- <look name="netTexture" rgb="0.4 0.3 0.2" roughness="1.0" normal_map="FishNetEnv/fibre_texture.png"/> -->
-        <look name="netTexture" rgb="0.4 0.3 0.2" roughness="1.0" normal_map="FishNetEnv/fibre_texture_inverted.png"/>
+        <look name="netTexture" rgb="0.2 0.2 0.2" roughness="1.0" normal_map="FishNetEnv/fibre_texture_inverted.png"/>
     </looks>
     
 

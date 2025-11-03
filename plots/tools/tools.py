@@ -370,4 +370,3 @@ def print_bag_topics(bagdir: str):
         print('Topics and message types:')
         for c in sorted(reader.connections, key=lambda x: x.topic):
             print(f'{c.topic:45s}  {c.msgtype}')
-
