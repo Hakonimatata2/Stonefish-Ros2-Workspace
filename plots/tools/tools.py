@@ -370,3 +370,44 @@ def print_bag_topics(bagdir: str):
         print('Topics and message types:')
         for c in sorted(reader.connections, key=lambda x: x.topic):
             print(f'{c.topic:45s}  {c.msgtype}')
+
+def print_df_frequency(df):
+    N = len(df)
+    total_time = df['t'].iloc[-1] - df['t'].iloc[0]
+    f_mean = (N - 1) / total_time
+    print(f"Avg. frequency: {f_mean:.2f} Hz")
+
+
+def normalize_time(df: pd.DataFrame):
+    df["t"] -= df["t"][0]
+    return df
+
+
+def get_profiler_data(bag, topic):
+
+    typestore = get_typestore(Stores.ROS2_HUMBLE)
+
+    data = {
+        'time': [],
+        'ranges': []
+    }
+
+    with AnyReader([Path(bag)], default_typestore=typestore) as reader:
+        conns = [c for c in reader.connections if c.topic == topic]
+        if not conns:
+            raise SystemExit(f"Could not find topic {topic}. Available: " + ", ".join(sorted({c.topic for c in reader.connections})))
+
+        start_ns = reader.start_time
+
+        for conn, t_ns, raw in reader.messages(connections=conns):
+            t_rel = (t_ns - start_ns) * 1e-9
+            msg = reader.deserialize(raw, conn.msgtype)
+
+            data['ranges'].append(msg.ranges[0])
+            data['time'].append(t_rel)
+
+    t0 = data['time'][0]
+    time_normalized = [x-t0 for x in data['time']]
+    data['time'] = time_normalized
+
+    return data

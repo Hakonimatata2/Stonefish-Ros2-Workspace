@@ -7,7 +7,7 @@
         <ned latitude="40.0" longitude="3.0"/> 
         <!-- ocean definitions -->
             <ocean>
-            <water density="1031.0" jerlov="0.22" temperature="15.0"/>
+            <water density="1031.0" jerlov="0.35" temperature="15.0"/>
             <waves height="0.0"/>
             <particles enabled="true"/>
         </ocean>
@@ -15,7 +15,7 @@
 
     <!-- Atmosphere -->
     <atmosphere>
-        <sun azimuth="180.0" elevation="90.0"/>
+        <sun azimuth="91.0" elevation="58.0"/>
     </atmosphere>
 
     <!-- Materials and looks -->
@@ -59,20 +59,6 @@
         <!-- <look name="black"/> -->
         <world_transform xyz="0.0 0.0 0.0" rpy="-1.57079632679 0.0 0.0"/>
     </static>
-
-    <!-- <static name="Top" type="model">
-        <physical>
-            <mesh filename="FishNetEnv/Net_cage_top_r25m.obj" scale="1.0" convex="false"/>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        </physical>
-        <visual>
-            <mesh filename="FishNetEnv/Net_cage_top_r25m.obj" scale="1.0"/>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        </visual>
-        <material name="NetMaterial"/>
-        <look name="black"/>
-        <world_transform xyz="0.0 0.0 0.0" rpy="-1.57079632679 0.0 0.0"/>
-    </static> -->
 
     <!-- Include robot -->
     <!-- <include file="$(find simulator)/scenarios/bluerov2_robot.scn">

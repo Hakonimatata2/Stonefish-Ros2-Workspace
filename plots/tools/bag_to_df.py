@@ -97,16 +97,40 @@ def _register_deps(typestore: Typestore, dep_pkgs: list[str]) -> int:
     return total
 
 
+# def _build_typestore(msg_dirs: Iterable[Path] | None = None,
+#                      pkg_names: Iterable[str] | None = None,
+#                      dep_pkgs: Iterable[str] | None = None) -> Typestore:
+#     ts = Typestore()
+#     _register_deps(ts, list(dep_pkgs or []))
+#     msg_dirs = list(msg_dirs or [])
+#     pkg_names = list(pkg_names or [])
+#     for i, d in enumerate(msg_dirs):
+#         _register_all_types(ts, d, pkg_names[i] if i < len(pkg_names) else None)
+#     return ts
+
+# --- Riktig typestore for rosbags ≥0.10 ---
+try:
+    from rosbags.typesys.stores import Stores, get_typestore
+    def make_typestore():
+        return get_typestore(Stores.ROS2_HUMBLE)
+except ImportError:
+    # fallback for eldre rosbags
+    from rosbags.typesys.store import Typestore
+    def make_typestore():
+        return Typestore()
+    
 def _build_typestore(msg_dirs: Iterable[Path] | None = None,
                      pkg_names: Iterable[str] | None = None,
-                     dep_pkgs: Iterable[str] | None = None) -> Typestore:
-    ts = Typestore()
+                     dep_pkgs: Iterable[str] | None = None):
+    ts = make_typestore()
     _register_deps(ts, list(dep_pkgs or []))
     msg_dirs = list(msg_dirs or [])
     pkg_names = list(pkg_names or [])
     for i, d in enumerate(msg_dirs):
         _register_all_types(ts, d, pkg_names[i] if i < len(pkg_names) else None)
     return ts
+
+
 
 from rosbags.typesys import get_types_from_msg
 
@@ -165,7 +189,7 @@ def bag_topic_to_dataframe(
     Råbytes lagres som lengde (int) for å unngå enorme celler.
 
     Eksempel:
-        df = bag_topic_to_dataframe('path/to/bag', '/topic',
+        df = bag_topic_to_dataframe('path/to/bag', '/topic',sensor_msgs/msg/LaserScan
                                     time_unit='s',
                                     msg_dirs=[Path('/root/.../src/pkg/msg')],
                                     dep_pkgs=['std_msgs','sensor_msgs'])
