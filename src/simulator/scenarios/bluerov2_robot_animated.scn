@@ -30,7 +30,7 @@
         
         <!-- Sensors-->
         <!-- ============================================================ -->
-        <sensor name="Ground_Truth" rate="10.0" type="odometry">
+        <sensor name="Ground_Truth" rate="100.0" type="odometry">
             <noise position="0.0" velocity="0.0" angle="0.0" angular_velocity="0.0"/>
             <history samples="1"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -78,15 +78,15 @@
             <ros_publisher topic="/ping_360"/>
         </sensor>
 
-        <!-- <sensor name="Nucleus_1000_DVL" rate="8.0" type="dvl">
+        <sensor name="DVL_A50" rate="8.0" type="dvl">
             <specs beam_angle="20.0" beam_positive_z="false"/>
             <range velocity="10.0 10.0 5.0" altitude_min="0.1" altitude_max="50.0"/>
             <water_layer minimum_layer_size="0.2" boundary_near="2.0" boundary_far="30.0"/>
             <noise velocity_percent= "0.5" velocity="0.01" altitude="0.01" water_velocity_percent="0.5" water_velocity="0.01"/>
             <history samples="1"/>
             <origin xyz="0.153 0.0 0.0" rpy="0.0 -1.57079632679 0.0"/>
-            <ros_publisher topic="/dvl"/>
-        </sensor> -->
+            <ros_publisher topic="/dvl_a50"/>
+        </sensor>
 
         <sensor name="Nucleus_1000_DVL" rate="1.4" type="dvl">
             <specs beam_angle="20.0" beam_positive_z="false"/>

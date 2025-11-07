@@ -6,6 +6,9 @@ from rosbags.highlevel import AnyReader
 import pandas as pd
 from rosbags.typesys import Stores, get_typestore
 import math
+from scipy.spatial.transform import Rotation as R
+import matplotlib.pyplot as plt
+
 
 
 def Rx(r):
@@ -79,6 +82,62 @@ def invert_T(T):
     T_inv[:3, :3] = R.T
     T_inv[:3, 3] = -R.T @ t
     return T_inv
+
+
+def transform_path(xyz_transform, rpy_transform, xyz_list, rpy_list):
+
+    R_post = R.from_euler('xyz', rpy_transform)
+
+    xyz_transformed, rpy_transformed = [], []
+
+    for xyz, rpy in zip(xyz_list, rpy_list):
+        # Rotate and translate
+        xyz_w = R_post.apply(xyz) + xyz_transform
+        xyz_transformed.append(xyz_w)
+        
+        R_body = R.from_euler('xyz', rpy)
+        R_total = R_post * R_body
+
+        rpy_transformed.append(R_total.as_euler('xyz'))
+
+    xyz_transformed = np.array(xyz_transformed)
+    rpy_transformed = np.array(rpy_transformed)
+
+    return xyz_transformed, rpy_transformed
+
+
+def plot_heading_arrows(xyz_list, rpy_list):
+    x_list = xyz_list[:,0]
+    y_list = xyz_list[:,1]
+    yaw_list = rpy_list[:,2]
+
+    # --- Plot Arrows ---
+    n_arrows = 20
+    arrow_len = 0.5
+    idx = np.linspace(0, len(xyz_list)-1, n_arrows, dtype=int)
+
+    for i in idx:
+        yaw = yaw_list[i]
+        dx = arrow_len * np.cos(yaw)
+        dy = arrow_len * np.sin(yaw)
+
+        label = "ROV heading" if i == 0 else None
+
+        plt.arrow(y_list[i], x_list[i],
+                dy, dx,
+                head_width=0.1, head_length=0.1,
+                fc='r', ec='r', label=label)
+
+def plot_net():
+    # --- Plt Net ---
+    r = 25
+    cx, cy = 0, 0
+    theta = np.linspace(0, 2*np.pi, 200)
+    x = cx + r * np.cos(theta)
+    y = cy + r * np.sin(theta)
+
+    plt.plot(x, y, color="black", linewidth=2, label="Net cage")
+
 
 
 
@@ -312,7 +371,7 @@ def get_image_nearest_time(data_dict, target_time):
     idx = np.argmin(np.abs(times - target_time))
     return images[idx]
 
-def compare_singals(t1, t2, data1, data2):
+def get_signal_lag(t1, t2, data1, data2):
    
     # to np array
     t1 = np.asarray(t1, dtype=float)
