@@ -74,12 +74,12 @@ class KeyboardControl(Node):
                 break
             if   c == 'w': self.tau[0] += STEP_F
             elif c == 's': self.tau[0] -= STEP_F
-            elif c == 'a': self.tau[1] += STEP_F
-            elif c == 'd': self.tau[1] -= STEP_F
+            elif c == 'a': self.tau[1] -= STEP_F
+            elif c == 'd': self.tau[1] += STEP_F
             elif c == 'r': self.tau[2] += STEP_F
             elif c == 'f': self.tau[2] -= STEP_F
-            elif c == 'q': self.tau[5] += STEP_M
-            elif c == 'e': self.tau[5] -= STEP_M
+            elif c == 'q': self.tau[5] -= STEP_M
+            elif c == 'e': self.tau[5] += STEP_M
             elif c == ' ': self.tau[:] = 0.0
 
         # Compute forces using the psudo inverse

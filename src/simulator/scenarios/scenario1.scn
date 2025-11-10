@@ -61,15 +61,15 @@
     </static>
 
     <!-- Include robot -->
-    <!-- <include file="$(find simulator)/scenarios/bluerov2_robot.scn">
+    <include file="$(find simulator)/scenarios/bluerov2_robot.scn">
         <arg name="robot_name" value="BlueROV2_ResiFarm"/>
         <arg name="position" value="24.0 0.0 2.0"/>
         <arg name="orientation" value="0.0 0.0 0.0"/>
-    </include> -->
+    </include>
 
     <!-- Include animated robot -->
-    <include file="$(find simulator)/scenarios/bluerov2_robot_animated.scn">
+    <!-- <include file="$(find simulator)/scenarios/bluerov2_robot_animated.scn">
         <arg name="robot_name" value="BlueROV2_ResiFarm"/>
-    </include>
+    </include> -->
     
 </scenario>

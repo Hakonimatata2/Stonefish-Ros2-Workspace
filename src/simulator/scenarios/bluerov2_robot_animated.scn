@@ -15,13 +15,13 @@
 
     <animated name="vehicle" type="model" collisions="false">
         <physical>
-            <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/>
+            <mesh filename="BlueROV/BlueRov2_ResiFarm_Model_simplified.obj" scale="1"/>
             <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
             <thickness value="0.01"/>
         </physical>
         <visual>
-            <mesh filename="BlueROV/ROV_with_uv.obj" scale="1"/>
-            <!-- <mesh filename="BlueROV/ResiFarmBlueRov-simplified.obj" scale="1"/> -->
+            <!-- <mesh filename="BlueROV/ROV_with_uv.obj" scale="1"/> -->
+            <mesh filename="BlueROV/BlueRov2_ResiFarm_Model.obj" scale="1"/>
             <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
         </visual>
 
@@ -37,27 +37,15 @@
             <ros_publisher topic="/ground_truth"/>
         </sensor>
 
+        <!--At dvl position!-->
         <sensor name="NetDistanceProfiler" rate="10.0" type="profiler">
             <specs fov="0.0" steps="1"/>
             <range distance_min="0.2" distance_max="50.0"/>
             <noise distance="0.0"/>
             <history samples="1"/>
-            <origin xyz="0.153 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.178 0.0 0.112" rpy="0.0 0.0 0.0"/>
             <ros_publisher topic="/heading_distance_ground_truth"/>
         </sensor>
-
-        <!-- <sensor name="ICM-20602_IMU" rate="100.0" type="imu">
-            <range angular_velocity="34.9066 34.9066 34.9066" linear_acceleration="156.906"/>
-            
-            <noise angle="0.06 0.06 0.12"
-                angular_velocity="0.000698"
-                yaw_drift="0.0005" 
-                linear_acceleration="0.00981"/>
-
-            <history samples="1"/>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-            <ros_publisher topic="/imu"/>
-        </sensor> -->
 
         <sensor name="Sonoptix_EHO" type="fls">
             <specs beams="256" bins="1024" horizontal_fov="120.0" vertical_fov="20.0"/>
@@ -65,7 +53,7 @@
             <!-- <noise multiplicative="0.002" additive="0.005"/> -->
             <noise multiplicative="0.0" additive="0.0"/>
             <display colormap="hot"/>
-            <origin xyz="0.147759 0.0 -0.225529" rpy="1.57079633 0.0 1.57079633"/>
+            <origin xyz="0.169 0.0 -0.116" rpy="1.57079633 0.0 1.57079633"/>
             <ros_publisher topic="/multibeam_sonar"/>
         </sensor>
 
@@ -74,7 +62,7 @@
             <settings range_min="0.0" range_max="3.0" rotation_min="-180.0" rotation_max="180.0" gain="1.0"/>
             <noise multiplicative="0.005" additive="0.01"/>
             <display colormap="greenblue"/>
-            <origin xyz="-0.026 -0.12 -0.257" rpy="1.57079632679 0.0 0.0"/>
+            <origin xyz="0.0 -0.118 -0.145" rpy="1.57079632679 0.0 0.0"/>
             <ros_publisher topic="/ping_360"/>
         </sensor>
 
@@ -84,7 +72,7 @@
             <water_layer minimum_layer_size="0.2" boundary_near="2.0" boundary_far="30.0"/>
             <noise velocity_percent= "0.5" velocity="0.01" altitude="0.01" water_velocity_percent="0.5" water_velocity="0.01"/>
             <history samples="1"/>
-            <origin xyz="0.153 0.0 0.0" rpy="0.0 -1.57079632679 0.0"/>
+            <origin xyz="0.178 0.0 0.112" rpy="0.0 -1.57079632679 0.0"/>
             <ros_publisher topic="/dvl_a50"/>
         </sensor>
 
@@ -94,7 +82,7 @@
             <water_layer minimum_layer_size="0.2" boundary_near="2.0" boundary_far="30.0"/>
             <noise velocity_percent= "0.5" velocity="0.01" altitude="0.01" water_velocity_percent="0.5" water_velocity="0.01"/>
             <history samples="1"/>
-            <origin xyz="0.153 0.0 0.0" rpy="0.0 -1.57079632679 0.0"/>
+            <origin xyz="0.178 0.0 0.112" rpy="0.0 -1.57079632679 0.0"/>
             <ros_publisher topic="/dvl"/>
         </sensor>
 
@@ -108,7 +96,7 @@
                 linear_acceleration="0.00018"/>
 
             <history samples="1"/>
-            <origin xyz="0.153 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.178 0.0 0.112" rpy="0.0 0.0 0.0"/>
             <ros_publisher topic="/imu"/>
         </sensor>
 
@@ -131,25 +119,25 @@
             <external_sensors dvl="dvl" pressure="pressure"/>
             <!-- <origin xyz="0.153 0.0 0.0" rpy="0.0 0.0 0.0"/> -->
 
-            <origin xyz="0.153 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.178 0.0 0.112" rpy="0.0 0.0 0.0"/>
             <ros_publisher topic="/ins"/>
         </sensor>
 
         <!-- Stereo Camera -->
         <sensor name="CamLeft" rate="10.0" type="camera">
             <specs resolution_x="720" resolution_y="540" horizontal_fov="126.0"/>
-            <origin xyz="0.126 -0.055 0.156" rpy="1.57079632679 0.0 1.57079632679"/>
+            <origin xyz="0.153 -0.055 0.264" rpy="1.57079632679 0.0 1.57079632679"/>
             <ros_publisher topic="/left_camera"/>
         </sensor>
         <sensor name="CamRight" rate="10.0" type="camera">
             <specs resolution_x="720" resolution_y="540" horizontal_fov="126.0"/>
-            <origin xyz="0.126 0.055 0.156" rpy="1.57079632679 0.0 1.57079632679"/>
+            <origin xyz="0.153 0.055 0.264" rpy="1.57079632679 0.0 1.57079632679"/>
             <ros_publisher topic="/right_camera"/>
         </sensor>
 
         <sensor name="CamCenter" rate="25.0" type="camera">
             <specs resolution_x="1280" resolution_y="720" horizontal_fov="80"/>
-            <origin xyz="0.178 0.0 -0.111" rpy="1.57079632679 0.0 1.57079632679"/>
+            <origin xyz="0.203 0.0 0.0" rpy="1.57079632679 0.0 1.57079632679"/>
             <ros_publisher topic="/center_camera"/>
         </sensor>
 
@@ -159,25 +147,25 @@
         <light name="Spot1">
             <specs radius="0.001" cone_angle="80.0" illuminance="1500.0"/>
             <color temperature="5700.0"/>
-            <origin xyz="0.155 -0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
+            <origin xyz="0.155 -0.185 -0.042" rpy="0.0 1.57079632679 0.0"/>
         </light>
 
         <light name="Spot2">
             <specs radius="0.001" cone_angle="80.0" illuminance="1500.0"/>
             <color temperature="5700.0"/>
-            <origin xyz="0.155 0.187 -0.153" rpy="0.0 1.57079632679 0.0"/>
+            <origin xyz="0.155 0.185 -0.042" rpy="0.0 1.57079632679 0.0"/>
         </light>
 
         <light name="Spot3">
             <specs radius="0.001" cone_angle="80.0" illuminance="1500.0"/>
             <color temperature="5700.0"/>
-            <origin xyz="0.160 -0.187 0.0" rpy="0.0 1.2 0.0"/>
+            <origin xyz="0.160 -0.185 0.121" rpy="0.0 1.2 0.0"/>
         </light>
 
         <light name="Spot4">
             <specs radius="0.001" cone_angle="80.0" illuminance="1500.0"/>
             <color temperature="5700.0"/>
-            <origin xyz="0.160 0.187 0.0" rpy="0.0 1.2 0.0"/>
+            <origin xyz="0.160 0.185 0.121" rpy="0.0 1.2 0.0"/>
         </light>
 
 
