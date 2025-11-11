@@ -95,15 +95,16 @@ def transform_path(xyz_transform, rpy_transform, xyz_list, rpy_list):
         xyz_w = R_post.apply(xyz) + xyz_transform
         xyz_transformed.append(xyz_w)
         
+        # Add rotations
         R_body = R.from_euler('xyz', rpy)
         R_total = R_post * R_body
-
         rpy_transformed.append(R_total.as_euler('xyz'))
 
     xyz_transformed = np.array(xyz_transformed)
     rpy_transformed = np.array(rpy_transformed)
 
     return xyz_transformed, rpy_transformed
+
 
 
 def plot_heading_arrows(xyz_list, rpy_list):
@@ -438,6 +439,9 @@ def print_df_frequency(df):
 
 
 def normalize_time(df: pd.DataFrame):
+    """"
+    Do not use
+    """
     df["t"] -= df["t"][0]
     return df
 
