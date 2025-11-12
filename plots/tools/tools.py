@@ -372,7 +372,7 @@ def get_image_nearest_time(data_dict, target_time):
     idx = np.argmin(np.abs(times - target_time))
     return images[idx]
 
-def get_signal_lag(t1, t2, data1, data2):
+def get_signal_lag(t1, data1, t2, data2):
    
     # to np array
     t1 = np.asarray(t1, dtype=float)
@@ -418,7 +418,7 @@ def get_signal_lag(t1, t2, data1, data2):
     correlation = np.corrcoef(y2_alligned, y1)[0,1]
 
 
-    return float(lag_sec), t_start, t_end, rmse, correlation
+    return float(lag_sec)#, t_start, t_end, rmse, correlation
 
 def cut_dataframe(df, t1, t2):
     return df[(df["t"] >= t1) & (df["t"] <= t2)]
