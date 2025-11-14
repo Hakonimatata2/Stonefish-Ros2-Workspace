@@ -101,9 +101,6 @@
             <history samples="1"/>
             <!-- <origin xyz="0.178 0.0 0.112" rpy="0.0 0.0 0.0"/> -->
             <origin xyz="0.178 0.0 0.402" rpy="0.0 0.0 0.0"/>
-
-            <!--test-->
-            <!-- <origin xyz="1.0 1.0 1.0" rpy="0.0 0.0 0.0"/> -->
             <ros_publisher topic="/imu"/>
         </sensor>
 
