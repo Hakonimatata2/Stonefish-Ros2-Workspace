@@ -6,12 +6,48 @@ import numpy as np
 
 class Nucleus():
     """
-    This class processes and holds ins data
+    This class processes and holds ins data.
+    The ins output data is in world frame.
+    Angle offsets are removed (dvl is forward facing).
+    The positions are translated from INS -> Vehicle Origin.
     """
+    # def __init__(self, bagdir, xyz_post, rpy_post, t0=None,
+    #              # Offset to IMU (from SOLAQUA paper)
+    #              xyz_offset=[0.1, 0.04, 0.11],
+    #              rpy_offset=[np.deg2rad(-90), 0, np.deg2rad(-90)],
+    #              ):
+
+    #     self.df_ins = bag_topic_to_dataframe(bagdir, topic="/nucleus1000dvl/ins")
+
+    #     # Normalize time
+    #     if t0: self.set_t0(t0)
+
+    #     quats = self.df_ins[["quaternion.x", "quaternion.y", "quaternion.z", "quaternion.w"]].values
+    #     eulers = R.from_quat(quats).as_euler('xyz', degrees=False)
+    #     self.df_ins["roll"]  = eulers[:, 0]
+    #     self.df_ins["pitch"] = eulers[:, 1]
+    #     self.df_ins["yaw"]   = eulers[:, 2]
+        
+    #     x = self.df_ins["positionFrame.x"].to_numpy(dtype=float) - xyz_offset[0]
+    #     y = self.df_ins["positionFrame.y"].to_numpy(dtype=float) - xyz_offset[1]
+    #     z = self.df_ins["positionFrame.z"].to_numpy(dtype=float) - xyz_offset[2]
+
+    #     # The ins is oriented [-90, 0, -90] relative to the ROV
+    #     # To remove these constan angles, simply add them back
+    #     roll  = self.df_ins["roll"].to_numpy(dtype=float)  - rpy_offset[0]
+    #     pitch = self.df_ins["pitch"].to_numpy(dtype=float) - rpy_offset[1]
+    #     yaw   = self.df_ins["yaw"].to_numpy(dtype=float)   - rpy_offset[2]
+
+    #     xyz_raw = np.array([x, y, z]).T
+    #     rpy_raw = np.array([roll, pitch, yaw]).T
+
+    #     # Transform path to net
+    #     self.xyz, self.rpy = transform_path(xyz_post, rpy_post, xyz_raw, rpy_raw)
+
     def __init__(self, bagdir, xyz_post, rpy_post, t0=None,
                  # Offset to IMU (from SOLAQUA paper)
-                 xyz_offset=[0.1, 0.04, 0.11],
-                 rpy_offset=[np.deg2rad(-90), 0, np.deg2rad(-90)],
+                 r_cg_to_ins=np.array([0.178, 0.0, 0.402]),
+                 rpy_cg_to_ins=np.array([np.deg2rad(-90), 0, np.deg2rad(-90)]), # Offsets due to mounting orientation
                  ):
 
         self.df_ins = bag_topic_to_dataframe(bagdir, topic="/nucleus1000dvl/ins")
@@ -19,27 +55,25 @@ class Nucleus():
         # Normalize time
         if t0: self.set_t0(t0)
 
-        quats = self.df_ins[["quaternion.x", "quaternion.y", "quaternion.z", "quaternion.w"]].values
-        eulers = R.from_quat(quats).as_euler('xyz', degrees=False)
-        self.df_ins["roll"]  = eulers[:, 0]
-        self.df_ins["pitch"] = eulers[:, 1]
-        self.df_ins["yaw"]   = eulers[:, 2]
+        R_body_to_sensor = R.from_euler('xyz', rpy_cg_to_ins, degrees=False).as_matrix()
+        R_sensor_to_body = R_body_to_sensor.T
+
+        R_world_to_sensor = R.from_quat(self.df_ins[["quaternion.x", "quaternion.y", "quaternion.z", "quaternion.w"]].values).as_matrix()
+        R_world_to_body = R_world_to_sensor @ R_sensor_to_body
         
-        x = self.df_ins["positionFrame.x"].to_numpy(dtype=float) - xyz_offset[0]
-        y = self.df_ins["positionFrame.y"].to_numpy(dtype=float) - xyz_offset[1]
-        z = self.df_ins["positionFrame.z"].to_numpy(dtype=float) - xyz_offset[2]
+        positions_ins = self.df_ins[["positionFrame.x", "positionFrame.y", "positionFrame.z"]].to_numpy()
+        positions_cg = positions_ins - (R_world_to_body @ r_cg_to_ins.reshape(3,1)).reshape(-1,3)
 
-        # The ins is oriented [-90, 0, -90] relative to the ROV
-        # To remove these constan angles, simply add them back
-        roll  = self.df_ins["roll"].to_numpy(dtype=float)  - rpy_offset[0]
-        pitch = self.df_ins["pitch"].to_numpy(dtype=float) - rpy_offset[1]
-        yaw   = self.df_ins["yaw"].to_numpy(dtype=float)   - rpy_offset[2]
-
+        rpy_body = R.from_matrix(R_world_to_body).as_euler('xyz', degrees=False)
+        
+        roll, pitch, yaw  = rpy_body[:,0], rpy_body[:,1], rpy_body[:,2]
+        x, y, z = positions_cg[:, 0], positions_cg[:, 1], positions_cg[:, 2]
         xyz_raw = np.array([x, y, z]).T
         rpy_raw = np.array([roll, pitch, yaw]).T
 
         # Transform path to net
         self.xyz, self.rpy = transform_path(xyz_post, rpy_post, xyz_raw, rpy_raw)
+
 
     # RAW data at IMU position
     @property

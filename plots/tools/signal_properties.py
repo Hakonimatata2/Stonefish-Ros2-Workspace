@@ -33,6 +33,8 @@ def compare_signals(t1, x1, t2, x2):
     rmse = np.sqrt(np.mean(e**2))
     corr = np.corrcoef(x1_interp, x2_interp)[0, 1]
     mean_error = np.mean(e)
+    mean1 = np.mean(x1_interp)
+    mean2 = np.mean(x2_interp)
 
     # Varians (sample-varians, ddof=1)
     var1 = np.var(x1_interp, ddof=1)
@@ -53,6 +55,8 @@ def compare_signals(t1, x1, t2, x2):
     output = {
         'rmse': rmse,
         'corr': corr,
+        'mean1': mean1,
+        'mean2': mean2,
         'mean_error': mean_error,
 
         # Varians
