@@ -11,45 +11,13 @@ class Nucleus():
     Angle offsets are removed (dvl is forward facing).
     The positions are translated from INS -> Vehicle Origin.
     """
-    # def __init__(self, bagdir, xyz_post, rpy_post, t0=None,
-    #              # Offset to IMU (from SOLAQUA paper)
-    #              xyz_offset=[0.1, 0.04, 0.11],
-    #              rpy_offset=[np.deg2rad(-90), 0, np.deg2rad(-90)],
-    #              ):
-
-    #     self.df_ins = bag_topic_to_dataframe(bagdir, topic="/nucleus1000dvl/ins")
-
-    #     # Normalize time
-    #     if t0: self.set_t0(t0)
-
-    #     quats = self.df_ins[["quaternion.x", "quaternion.y", "quaternion.z", "quaternion.w"]].values
-    #     eulers = R.from_quat(quats).as_euler('xyz', degrees=False)
-    #     self.df_ins["roll"]  = eulers[:, 0]
-    #     self.df_ins["pitch"] = eulers[:, 1]
-    #     self.df_ins["yaw"]   = eulers[:, 2]
-        
-    #     x = self.df_ins["positionFrame.x"].to_numpy(dtype=float) - xyz_offset[0]
-    #     y = self.df_ins["positionFrame.y"].to_numpy(dtype=float) - xyz_offset[1]
-    #     z = self.df_ins["positionFrame.z"].to_numpy(dtype=float) - xyz_offset[2]
-
-    #     # The ins is oriented [-90, 0, -90] relative to the ROV
-    #     # To remove these constan angles, simply add them back
-    #     roll  = self.df_ins["roll"].to_numpy(dtype=float)  - rpy_offset[0]
-    #     pitch = self.df_ins["pitch"].to_numpy(dtype=float) - rpy_offset[1]
-    #     yaw   = self.df_ins["yaw"].to_numpy(dtype=float)   - rpy_offset[2]
-
-    #     xyz_raw = np.array([x, y, z]).T
-    #     rpy_raw = np.array([roll, pitch, yaw]).T
-
-    #     # Transform path to net
-    #     self.xyz, self.rpy = transform_path(xyz_post, rpy_post, xyz_raw, rpy_raw)
-
+   
     def __init__(self, bagdir, xyz_post, rpy_post, t0=None,
                  # Offset to IMU (from SOLAQUA paper)
                  r_cg_to_ins=np.array([0.178, 0.0, 0.402]),
                  rpy_cg_to_ins=np.array([np.deg2rad(-90), 0, np.deg2rad(-90)]), # Offsets due to mounting orientation
                  ):
-
+        
         self.df_ins = bag_topic_to_dataframe(bagdir, topic="/nucleus1000dvl/ins")
 
         # Normalize time
@@ -131,15 +99,25 @@ class Nucleus():
         y_s = lp_gauss(self.y)
         z_s = lp_gauss(self.z)
 
-        # Unwrap vinkler for å unngå hopp ved +-pi
-        roll_u  = np.unwrap(self.roll)
-        pitch_u = np.unwrap(self.pitch)
-        yaw_u   = np.unwrap(self.yaw)
+        # From angle to unit circle
+        roll_c  = np.exp(1j * self.roll)
+        pitch_c = np.exp(1j * self.pitch)
+        yaw_c   = np.exp(1j * self.yaw)
 
-        # filter on the complex plane for continuity
-        roll_s  = np.angle(np.exp(1j * lp_gauss(roll_u)))
-        pitch_s = np.angle(np.exp(1j * lp_gauss(pitch_u)))
-        yaw_s   = np.angle(np.exp(1j * lp_gauss(yaw_u)))
+        # Filter real and imag separately
+        roll_c_s = lp_gauss(roll_c.real) + 1j * lp_gauss(roll_c.imag)
+        pitch_c_s = lp_gauss(pitch_c.real) + 1j * lp_gauss(pitch_c.imag)
+        yaw_c_s = lp_gauss(yaw_c.real) + 1j * lp_gauss(yaw_c.imag)
+
+        # Normalize
+        roll_c_s  /= np.abs(roll_c_s)
+        pitch_c_s /= np.abs(pitch_c_s)
+        yaw_c_s   /= np.abs(yaw_c_s)
+
+        # Back to angle
+        roll_s = np.angle(roll_c_s)
+        pitch_s = np.angle(pitch_c_s)
+        yaw_s = np.angle(yaw_c_s)
 
         xyz_filtered = np.array([x_s, y_s, z_s]).T
         rpy_filtered = np.array([roll_s, pitch_s, yaw_s]).T
