@@ -23,28 +23,8 @@ Keyboard kontroll kjøres med noden:
 ros2 run uuv_teleop keyboard_control
 ```
 
-# Les DVL data
-```
-ros2 launch listener dvl_logger.launch.py
-```
-# ROS2 tips
 
-Kjør rosviz
-
-```
-rviz2
-```
-
-Sjekk alle topics med:
-
-```
-ros2 topic list
-```
-
-Konverter fra ros1 .bag til ros2:
-
-
-# Jobbe med ros data
+# Div Tips
 
 Ros 1 .bag filer er opptak av ulike topics. De må konverteres til ros2-bag:
 
@@ -90,11 +70,6 @@ python3 bag2csv.py \
   --out output.csv
 ```
 
-
-# Recorde data
-
-Til Erik:
-ros2 bag record /dvl /pressure /ground_truth /center_camera/camera_info /center_camera/image_color
 
 
 
